@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    private GameObject spaceship;
+    private Spaceship spaceship;
 
-    public GameObject PlaceSpaceship(GameObject spaceship) {
+    public Spaceship PlaceSpaceship(Spaceship spaceship, int playerIndex) {
         var placedSpaceship = Instantiate(spaceship, transform);
         this.spaceship = placedSpaceship;
-        return placedSpaceship;
+        this.spaceship.playerIndex = playerIndex;
+        return this.spaceship;
     }
 
     public void RemoveSpaceship() {

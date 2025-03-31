@@ -4,19 +4,20 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    private RectTransform rt;
+    [HideInInspector]
+    public RectTransform rt;
     private ScrollRect scrollSpace;
     private Image image;
     private CardInfoContainer cardInfoContainer;
 
     [field: SerializeField]
-    public GameObject Spaceship { get; private set; }
+    public Spaceship Spaceship { get; private set; }
     [HideInInspector]
     public CardsContainer cardsContainer;
     [HideInInspector]
     public float Width { get; private set; }
 
-    private Vector3 initialPosition;
+    private Vector2 initialPosition;
     private float dragStartingThreshold;
     private float scrollStartingThreshold;
 
@@ -35,7 +36,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private void Start() {
         cardInfoContainer = GameObject.FindGameObjectWithTag("CardInfoContainer").GetComponent<CardInfoContainer>();
 
-        initialPosition = transform.localPosition;
         dragStartingThreshold = rt.rect.height * 0.1f;
         scrollStartingThreshold = rt.rect.width * 0.1f;
     }
@@ -54,6 +54,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             scrollSpace.OnBeginDrag(eventData);
         } else if (eventData.position.y - dragStartingPosition.y > dragStartingThreshold) {
             dragging = true;
+            initialPosition = rt.anchoredPosition;
             transform.SetAsLastSibling();
             cardsContainer.HandleCardDragBeginning();
             image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
@@ -66,7 +67,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             scrollSpace.OnEndDrag(eventData);
         } else if (dragging) {
             dragging = false;
-            transform.localPosition = initialPosition;
+            rt.anchoredPosition = initialPosition;
             cardsContainer.HandleCardDragEnding(this);
             image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }

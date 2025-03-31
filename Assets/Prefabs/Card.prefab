@@ -103,5 +103,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2f0ba6e1d1a3241b900ae621ac21da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Spaceship>k__BackingField: {fileID: 3097886974903159623, guid: fc2691e75636ed84190c7855e0054b37, type: 3}
+  <Spaceship>k__BackingField: {fileID: 2886818419271281545, guid: fc2691e75636ed84190c7855e0054b37, type: 3}
   cardsContainer: {fileID: 0}

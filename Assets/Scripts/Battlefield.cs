@@ -29,16 +29,28 @@ public class Battlefield : MonoBehaviour
         return -1;
     }
 
-    public void SetColumnsActive(bool active) {
+    public void SetColumnsActive(int playerIndex, bool active) {
+        int playerRow = 0;
+        if (playerIndex == 1) {
+            playerRow = cells.Length - 1;
+        }
+
+        for (var i = 0; i < cells[playerRow].Length; ++i) {
+            if (cells[playerRow][i].IsOccupied()) {
+                battlefieldColumns[i].occupied = true;
+            }
+        }
+
         battlefieldColumns[0].transform.parent.gameObject.SetActive(active);
     }
 
-    public GameObject SpawnSpaceship(GameObject spaceship, int column, int row = 0) {
+    public Spaceship SpawnSpaceship(Spaceship spaceship, int playerIndex, int column, int row = 0) {
+        if (playerIndex == 1) {
+            row = cells.Length - 1 - row;
+        }
+
         if (!cells[row][column].IsOccupied()) {
-            if (row == 0) {
-                battlefieldColumns[column].occupied = true;
-            }
-            return cells[row][column].PlaceSpaceship(spaceship);
+            return cells[row][column].PlaceSpaceship(spaceship, playerIndex);
         }
         return null;
     }

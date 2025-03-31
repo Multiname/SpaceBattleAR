@@ -37,6 +37,7 @@ public class BattlefieldColumn : MonoBehaviour
 
     private void OnDisable() {
         Selected = false;
+        occupied = false;
         mr.material = unselectedMaterial;
     }
 

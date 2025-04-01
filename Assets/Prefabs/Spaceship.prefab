@@ -121,4 +121,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 9051511496046741215}
+  cardImage: {fileID: 7730464602232573518, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
   playerIndex: 0

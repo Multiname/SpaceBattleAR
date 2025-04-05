@@ -6,44 +6,72 @@ public class Spaceship : MonoBehaviour
 {
     [SerializeField]
     private MeshRenderer meshRenderer;
-    [SerializeField]
-    private Image cardImage;
-    private CardInfoContainer cardInfoContainer;
+    [field: SerializeField]
+    public Image CardImage { get; private set; }
+    public SpaceshipsManager SpaceshipsManager { private get; set; }
+    
+    private Color teamColor;
+    private bool selected = false;
+    private bool mouseOverSpaceship = false;
 
     [HideInInspector]
     public int playerIndex = 0;
 
     private float holdDuration = 1.0f;
-    private float currentHoldDuration = 0.0f;
 
     private void Start() {
         meshRenderer.material.color = Color.green;
-        cardInfoContainer = GameObject.FindGameObjectWithTag("CardInfoContainer").GetComponent<CardInfoContainer>();
+        teamColor = Color.green;
     }
 
     public void SetFriendliness(bool friendly) {
         if (friendly) {
              meshRenderer.material.color = Color.green;
+             teamColor = Color.green;
         } else {
             meshRenderer.material.color = Color.red;
+            teamColor = Color.red;
         }
     }
 
-    private void OnMouseDrag() {
-        if(!EventSystem.current.IsPointerOverGameObject()) {
-            currentHoldDuration += Time.deltaTime;
-            if (currentHoldDuration >= holdDuration) {
-                currentHoldDuration = 0.0f;
-                cardInfoContainer.ShowCardInfo(cardImage.sprite);
-            }
-        }
+    private void Select() {
+        meshRenderer.material.color = Color.blue;
+        selected = true;
+    }
+
+    public void Unselect() {
+        meshRenderer.material.color = teamColor;
+        selected = false;
+    }
+
+    private void OnMouseEnter() {
+        mouseOverSpaceship = true;
     }
 
     private void OnMouseExit() {
-        currentHoldDuration = 0.0f;
+        mouseOverSpaceship = false;
+    }
+
+    private void OnMouseDown() {
+        if(!EventSystem.current.IsPointerOverGameObject()) {
+            Invoke(nameof(OnLongPress), holdDuration);
+        }
+    }
+
+    private void OnLongPress() {
+        Select();
+        SpaceshipsManager.ShowSpaceshipInfo(this);
     }
 
     private void OnMouseUp() {
-        currentHoldDuration = 0.0f;
+        if (!selected) {
+            CancelInvoke(nameof(OnLongPress));
+            if (!EventSystem.current.IsPointerOverGameObject() && 
+                                mouseOverSpaceship &&
+                                SpaceshipsManager.GetCurrentPlayerIndex() == playerIndex) {
+                Select();
+                SpaceshipsManager.SelectSpaceship(this);
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public RectTransform rt;
     private ScrollRect scrollSpace;
     private Image image;
-    private CardInfoContainer cardInfoContainer;
 
     [field: SerializeField]
     public Spaceship Spaceship { get; private set; }
@@ -34,8 +33,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     }
     
     private void Start() {
-        cardInfoContainer = GameObject.FindGameObjectWithTag("CardInfoContainer").GetComponent<CardInfoContainer>();
-
         dragStartingThreshold = rt.rect.height * 0.1f;
         scrollStartingThreshold = rt.rect.width * 0.1f;
     }
@@ -75,7 +72,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!scrolling && !dragging) {
-            cardInfoContainer.ShowCardInfo(image.sprite);
+            cardsContainer.ShowCardInfo(image.sprite);
         }
     }
 }

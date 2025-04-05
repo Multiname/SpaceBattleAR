@@ -5,29 +5,31 @@ public class CardsContainer : MonoBehaviour
 {
     [SerializeField]
     private Card card;
-    private GameManager gameManager;
+    [SerializeField]
+    private UiManager uiManager;
 
     private RectTransform rt;
 
     private List<Card>[] cards = new List<Card>[2] { new(), new() };
     private float scrollSpaceWidth;
     private float cardWidth = 0;
+    private int currentPlayerIndex = 0;
 
     private void Start() {
         rt = GetComponent<RectTransform>();
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         scrollSpaceWidth = transform.parent.GetComponent<RectTransform>().rect.width;
 
         rt.sizeDelta = new Vector2(scrollSpaceWidth, rt.sizeDelta.y);
     }
 
-    public void SwitchToCurrentPlayer() {
-        foreach (var card in cards[(gameManager.CurrentPlayerIndex + 1) % 2]) {
+    public void SwitchToCurrentPlayer(int playerIndex) {
+        currentPlayerIndex = playerIndex;
+        foreach (var card in cards[(currentPlayerIndex + 1) % 2]) {
             card.gameObject.SetActive(false);
         }
 
-        foreach(var card in cards[gameManager.CurrentPlayerIndex]) {
+        foreach(var card in cards[currentPlayerIndex]) {
             card.gameObject.SetActive(true);
         }
 
@@ -42,18 +44,18 @@ public class CardsContainer : MonoBehaviour
             cardWidth = newCard.Width;
         }
 
-        MoveCardAtPosition(newCard, cards[gameManager.CurrentPlayerIndex].Count);
+        MoveCardAtPosition(newCard, cards[currentPlayerIndex].Count);
 
-        cards[gameManager.CurrentPlayerIndex].Add(newCard);
+        cards[currentPlayerIndex].Add(newCard);
 
         AdaptContainerWidth();
     }
 
     private void RemoveCard(Card card) {
-        for (var i = cards[gameManager.CurrentPlayerIndex].IndexOf(card) + 1; i < cards[gameManager.CurrentPlayerIndex].Count; ++i) {
-            MoveCardAtPosition(cards[gameManager.CurrentPlayerIndex][i], i - 1);
+        for (var i = cards[currentPlayerIndex].IndexOf(card) + 1; i < cards[currentPlayerIndex].Count; ++i) {
+            MoveCardAtPosition(cards[currentPlayerIndex][i], i - 1);
         }
-        cards[gameManager.CurrentPlayerIndex].Remove(card);
+        cards[currentPlayerIndex].Remove(card);
         AdaptContainerWidth();
         Destroy(card.gameObject);
     }
@@ -65,22 +67,25 @@ public class CardsContainer : MonoBehaviour
     }
 
     private void AdaptContainerWidth() {
-        var containerWidth = (cardWidth + 50) * cards[gameManager.CurrentPlayerIndex].Count + 50;
+        var containerWidth = (cardWidth + 50) * cards[currentPlayerIndex].Count + 50;
         if (containerWidth > scrollSpaceWidth) {
             rt.sizeDelta = new Vector2(containerWidth, rt.sizeDelta.y);
         }
     }
 
     public void HandleCardDragBeginning() {
-        gameManager.SetBattlefieldColumnsActive(true);
+        uiManager.HandleCardDragBeginning();
     }
 
     public void HandleCardDragEnding(Card card) {
-        var spawned = gameManager.TryToSpawnSpaceship(card.Spaceship);
-        gameManager.SetBattlefieldColumnsActive(false);
+        var spawned = uiManager.HandleCardDragEnding(card.Spaceship);
 
         if (spawned) {
             RemoveCard(card);
         }
+    }
+
+    public void ShowCardInfo(Sprite sprite) {
+        uiManager.ShowCardInfo(sprite);
     }
 }

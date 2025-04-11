@@ -40,16 +40,4 @@ public class GameManager : MonoBehaviour
         uiManager.SwitchToCurrentPlayersCards(CurrentPlayerIndex);
         uiManager.PullCard();
     }
-
-    public void ShowCardInfo(Sprite sprite) {
-        uiManager.ShowCardInfo(sprite);
-    }
-
-    public void ShowSpaceshipInfo(Spaceship spaceship) {
-        uiManager.ShowSpaceshipInfo(spaceship);
-    }
-
-    public void SelectSpaceship(Spaceship spaceship) {
-        uiManager.SelectSpaceship(spaceship);
-    }
 }

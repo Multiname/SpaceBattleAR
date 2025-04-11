@@ -4,8 +4,6 @@ using UnityEngine;
 public class SpaceshipsManager : MonoBehaviour
 {
     [SerializeField]
-    private GameManager gameManager;
-    [SerializeField]
     private Battlefield battlefieldPrefab;
 
     [SerializeField] // DEBUG
@@ -24,7 +22,6 @@ public class SpaceshipsManager : MonoBehaviour
         var selectedColumn = battlefield.CheckColumnSelection();
         if (selectedColumn != -1) {
             var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, playerIndex, selectedColumn);
-            spawnedSpaceship.SpaceshipsManager = this;
             spaceships[playerIndex].Add(spawnedSpaceship);
             return true;
         }
@@ -38,17 +35,5 @@ public class SpaceshipsManager : MonoBehaviour
         foreach (var spaceship in spaceships[1]) {
             spaceship.SetFriendliness(!firstPlayerisNext);
         }
-    }
-
-    public void ShowSpaceshipInfo(Spaceship spaceship) {
-        gameManager.ShowSpaceshipInfo(spaceship);
-    }
-
-    public void SelectSpaceship(Spaceship spaceship) {
-        gameManager.SelectSpaceship(spaceship);
-    }
-
-    public int GetCurrentPlayerIndex() {
-        return gameManager.CurrentPlayerIndex;
     }
 }

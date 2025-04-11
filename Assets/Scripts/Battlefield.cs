@@ -50,7 +50,7 @@ public class Battlefield : MonoBehaviour
         }
 
         if (!cells[row][column].IsOccupied()) {
-            return cells[row][column].PlaceSpaceship(spaceship, playerIndex);
+            return cells[row][column].PlaceSpaceship(spaceship);
         }
         return null;
     }

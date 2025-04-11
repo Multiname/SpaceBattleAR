@@ -13,48 +13,73 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject cardsScrollSpace;
     [SerializeField]
-    private ClosureArea closureArea;
-    [SerializeField]
     private GameObject nextTurnButton;
     [SerializeField]
     private Image cardInfo;
+    [SerializeField]
+    private ClickHandler clickHandler;
+    [SerializeField]
+    private GameObject clickBlock;
+
+    private bool spaceshipSelected = false;
 
     public void ShowCardInfo(Sprite sprite) {
         cardInfo.sprite = sprite;
         cardInfo.GameObject().SetActive(true);
         nextTurnButton.SetActive(false);
-        closureArea.HandleClosure = () => {
-            cardInfo.GameObject().SetActive(false);
+        clickBlock.SetActive(true);
+        clickHandler.SetCardInfoShown();
+    }
+
+    public void HideCardInfo() {
+        cardInfo.GameObject().SetActive(false);
+        clickBlock.SetActive(false);
+        if (!spaceshipSelected) {
             nextTurnButton.SetActive(true);
-            closureArea.gameObject.SetActive(false);
-        };
-        closureArea.gameObject.SetActive(true);
+        }
     }
 
     public void ShowSpaceshipInfo(Spaceship spaceship) {
         cardInfo.sprite = spaceship.CardImage.sprite;
         cardInfo.GameObject().SetActive(true);
         nextTurnButton.SetActive(false);
-        closureArea.HandleClosure = () => {
-            spaceship.Unselect();
-            cardInfo.GameObject().SetActive(false);
-            nextTurnButton.SetActive(true);
-            closureArea.gameObject.SetActive(false);
-        };
-        closureArea.gameObject.SetActive(true);
     }
 
-    public void SelectSpaceship(Spaceship spaceship) {
+    public void HideSpaceshipInfo() {
+        cardInfo.GameObject().SetActive(false);
+        if (!spaceshipSelected) {
+            nextTurnButton.SetActive(true);
+        }
+    }
+
+    public void SelectAllySpaceship(Sprite sprite) {
         cardsScrollSpace.SetActive(false);
         spaceshipsCardsContainer.gameObject.SetActive(true);
-        spaceshipsCardsContainer.ShowAllySpaceshipCard(spaceship.CardImage.sprite);
-        closureArea.HandleClosure = () => {
-            spaceship.Unselect();
-            cardsScrollSpace.SetActive(true);
-            spaceshipsCardsContainer.gameObject.SetActive(false);
-            closureArea.gameObject.SetActive(false);
-        };
-        closureArea.gameObject.SetActive(true);
+        spaceshipsCardsContainer.ShowAllySpaceshipCard(sprite);
+        nextTurnButton.SetActive(false);
+        spaceshipSelected = true;
+    }
+
+    public void SelectEnemySpaceship(Sprite sprite) {
+        spaceshipsCardsContainer.ShowEnemySpaceshipCard(sprite);
+    }
+
+    public void UnselectEnemySpaceship() {
+        spaceshipsCardsContainer.HideEnemySpaceshipCard();
+    }
+
+    public void UnselectSpaceships() {
+        cardsScrollSpace.SetActive(true);
+        spaceshipsCardsContainer.gameObject.SetActive(false);
+        nextTurnButton.SetActive(true);
+        spaceshipSelected = false;
+    }
+
+    public bool TryToSelectTargetSpaceship(Sprite sprite) {
+        if (spaceshipsCardsContainer.gameObject.activeSelf) {
+            spaceshipsCardsContainer.ShowEnemySpaceshipCard(sprite);
+        }
+        return true;
     }
 
     public void PullCard() {

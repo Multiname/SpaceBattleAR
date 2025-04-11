@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Battlefield
   - GameManager
+  - ClosureArea
   layers:
   - Default
   - TransparentFX

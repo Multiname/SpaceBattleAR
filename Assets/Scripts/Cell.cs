@@ -4,10 +4,9 @@ public class Cell : MonoBehaviour
 {
     private Spaceship spaceship;
 
-    public Spaceship PlaceSpaceship(Spaceship spaceship, int playerIndex) {
+    public Spaceship PlaceSpaceship(Spaceship spaceship) {
         var placedSpaceship = Instantiate(spaceship, transform);
         this.spaceship = placedSpaceship;
-        this.spaceship.playerIndex = playerIndex;
         return this.spaceship;
     }
 

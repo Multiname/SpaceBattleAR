@@ -23,10 +23,14 @@ public class UiManager : MonoBehaviour
 
     private bool spaceshipSelected = false;
 
+    public void SetNextTurnButtonActive(bool active) {
+        nextTurnButton.SetActive(active);
+    }
+
     public void ShowCardInfo(Sprite sprite) {
         cardInfo.sprite = sprite;
         cardInfo.GameObject().SetActive(true);
-        nextTurnButton.SetActive(false);
+        SetNextTurnButtonActive(false);
         clickBlock.SetActive(true);
         clickHandler.SetCardInfoShown();
     }
@@ -35,20 +39,20 @@ public class UiManager : MonoBehaviour
         cardInfo.GameObject().SetActive(false);
         clickBlock.SetActive(false);
         if (!spaceshipSelected) {
-            nextTurnButton.SetActive(true);
+            SetNextTurnButtonActive(true);
         }
     }
 
     public void ShowSpaceshipInfo(Spaceship spaceship) {
         cardInfo.sprite = spaceship.CardImage.sprite;
         cardInfo.GameObject().SetActive(true);
-        nextTurnButton.SetActive(false);
+        SetNextTurnButtonActive(false);
     }
 
     public void HideSpaceshipInfo() {
         cardInfo.GameObject().SetActive(false);
         if (!spaceshipSelected) {
-            nextTurnButton.SetActive(true);
+            SetNextTurnButtonActive(true);
         }
     }
 
@@ -56,7 +60,7 @@ public class UiManager : MonoBehaviour
         cardsScrollSpace.SetActive(false);
         spaceshipsCardsContainer.gameObject.SetActive(true);
         spaceshipsCardsContainer.ShowAllySpaceshipCard(sprite);
-        nextTurnButton.SetActive(false);
+        SetNextTurnButtonActive(false);
         spaceshipSelected = true;
     }
 
@@ -71,7 +75,7 @@ public class UiManager : MonoBehaviour
     public void UnselectSpaceships() {
         cardsScrollSpace.SetActive(true);
         spaceshipsCardsContainer.gameObject.SetActive(false);
-        nextTurnButton.SetActive(true);
+        SetNextTurnButtonActive(true);
         spaceshipSelected = false;
     }
 

@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour
     private void Start() {
         uiManager.PullCard();
         uiManager.PullCard();
+        uiManager.SetNextTurnButtonActive(true);
     }
 
     public void CreateBattlefield(GameObject origin) {
         spaceshipsManager.CreateBattlefield(origin);
         uiManager.PullCard();
+        uiManager.SetNextTurnButtonActive(true);
     }
 
     public bool TryToSpawnSpaceship(Spaceship spaceship) {

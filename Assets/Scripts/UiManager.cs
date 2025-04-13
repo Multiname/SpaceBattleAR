@@ -44,7 +44,7 @@ public class UiManager : MonoBehaviour
     }
 
     public void ShowSpaceshipInfo(Spaceship spaceship) {
-        cardInfo.sprite = spaceship.CardImage.sprite;
+        cardInfo.sprite = spaceship.Card.Image.sprite;
         cardInfo.GameObject().SetActive(true);
         SetNextTurnButtonActive(false);
     }
@@ -102,5 +102,9 @@ public class UiManager : MonoBehaviour
         var spawned = gameManager.TryToSpawnSpaceship(spaceship);
         gameManager.SetBattlefieldColumnsActive(false);
         return spawned;
+    }
+
+    public void AttackSpaceship(Spaceship attacker, Spaceship target) {
+        gameManager.AttackSpaceship(attacker, target);
     }
 }

@@ -1,17 +1,31 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Spaceship : MonoBehaviour
 {
     [SerializeField]
     private MeshRenderer meshRenderer;
     [field: SerializeField]
-    public Image CardImage { get; private set; }
+    public Card Card { get; private set; }
+    [SerializeField]
+    private TextMeshPro healthPointsText;
     
     private Color teamColor;
     public bool Friendly { get; private set; } = true;
 
+    private int healthPoints;
+    public int HealthPoints { 
+        set {
+            healthPoints = value;
+            healthPointsText.text = value.ToString();
+        }
+        get {
+            return healthPoints;
+        }
+    }
+
     private void Start() {
+        HealthPoints = Card.HealthPoints;
         meshRenderer.material.color = Color.green;
         teamColor = Color.green;
     }

@@ -7,7 +7,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [HideInInspector]
     public RectTransform rt;
     private ScrollRect scrollSpace;
-    private Image image;
+    [field: SerializeField]
+    public Image Image { get; private set; }
 
     [field: SerializeField]
     public Spaceship Spaceship { get; private set; }
@@ -24,10 +25,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private bool dragging = false;
     private bool scrolling = false;
 
+    [field: SerializeField]
+    public int HealthPoints { get; private set; } = 2;
+    [field: SerializeField]
+    public int Damage { get; private set; } = 1;
+
     private void Awake() {
         rt = GetComponent<RectTransform>();
         scrollSpace = transform.parent.parent.parent.GetComponent<ScrollRect>();
-        image = GetComponent<Image>();
 
         Width = rt.rect.width;
     }
@@ -54,7 +59,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             initialPosition = rt.anchoredPosition;
             transform.SetAsLastSibling();
             cardsContainer.HandleCardDragBeginning();
-            image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            Image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
     }
 
@@ -66,13 +71,13 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             dragging = false;
             rt.anchoredPosition = initialPosition;
             cardsContainer.HandleCardDragEnding(this);
-            image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            Image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!scrolling && !dragging) {
-            cardsContainer.ShowCardInfo(image.sprite);
+            cardsContainer.ShowCardInfo(Image.sprite);
         }
     }
 }

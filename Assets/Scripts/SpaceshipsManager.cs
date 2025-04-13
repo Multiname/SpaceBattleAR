@@ -36,4 +36,12 @@ public class SpaceshipsManager : MonoBehaviour
             spaceship.SetFriendliness(!firstPlayerisNext);
         }
     }
+
+    public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
+        target.HealthPoints -= attacker.Card.Damage;
+        if (target.HealthPoints <= 0) {
+            spaceships[++playerIndex % 2].Remove(target);
+            Destroy(target.gameObject);
+        }
+    }
 }

@@ -80,7 +80,7 @@ public class ClickHandler : MonoBehaviour
 
                     selectedAllySpaceship = spaceship;
                     spaceship.Select();
-                    uiManager.SelectAllySpaceship(spaceship.CardImage.sprite);
+                    uiManager.SelectAllySpaceship(spaceship.Card.Image.sprite);
 
                     if (selectedEnemySpaceship != null) {
                         uiManager.UnselectEnemySpaceship();
@@ -88,23 +88,21 @@ public class ClickHandler : MonoBehaviour
                         selectedEnemySpaceship = null;
                     }
                 } else if (selectedAllySpaceship != null) {
-                    if (selectedEnemySpaceship != null) {
-                        selectedEnemySpaceship.Unselect();
-                    }
+                    if (spaceship == selectedEnemySpaceship) {
+                        uiManager.AttackSpaceship(selectedAllySpaceship, selectedEnemySpaceship);
+                        UnselectSpaceships();
+                    } else {
+                        if (selectedEnemySpaceship != null) {
+                            selectedEnemySpaceship.Unselect();
+                        }
 
-                    selectedEnemySpaceship = spaceship;
-                    spaceship.Select();
-                    uiManager.SelectEnemySpaceship(spaceship.CardImage.sprite);
+                        selectedEnemySpaceship = spaceship;
+                        spaceship.Select();
+                        uiManager.SelectEnemySpaceship(spaceship.Card.Image.sprite);
+                    }
                 }
             } else if (selectedAllySpaceship != null) {
-                uiManager.UnselectSpaceships();
-
-                selectedAllySpaceship.Unselect();
-                selectedAllySpaceship = null;
-
-                if (selectedEnemySpaceship != null) {
-                    selectedEnemySpaceship.Unselect();
-                }
+                UnselectSpaceships();
             }
 
             pressedSpaceship = null;
@@ -125,5 +123,16 @@ public class ClickHandler : MonoBehaviour
     private IEnumerator SetCardInfoShownNextFrame() {
         yield return null;
         cardInfoShown = true;
+    }
+
+    private void UnselectSpaceships() {
+        uiManager.UnselectSpaceships();
+
+        selectedAllySpaceship.Unselect();
+        selectedAllySpaceship = null;
+
+        if (selectedEnemySpaceship != null) {
+            selectedEnemySpaceship.Unselect();
+        }
     }
 }

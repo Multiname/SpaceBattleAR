@@ -42,4 +42,8 @@ public class GameManager : MonoBehaviour
         uiManager.SwitchToCurrentPlayersCards(CurrentPlayerIndex);
         uiManager.PullCard();
     }
+
+    public void AttackSpaceship(Spaceship attacker, Spaceship target) {
+        spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
+    }
 }

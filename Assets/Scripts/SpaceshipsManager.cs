@@ -43,10 +43,17 @@ public class SpaceshipsManager : MonoBehaviour
         }
     }
 
+    public void MoveSpaceshipsForward(int index) {
+        foreach (var spaceship in spaceships[index]) {
+            battlefield.TryToMoveSpaceshipForward(index, spaceship);
+        }
+    }
+
     public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
         target.HealthPoints -= attacker.Card.Damage;
         attacker.ActionAvailable = false;
         if (target.HealthPoints <= 0) {
+            target.cell.DetachSpaceship();
             spaceships[++playerIndex % 2].Remove(target);
             Destroy(target.gameObject);
         }

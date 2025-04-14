@@ -24,6 +24,8 @@ public class Spaceship : MonoBehaviour
     
     private Color teamColor;
     public bool Friendly { get; private set; } = true;
+    [HideInInspector]
+    public Cell cell;
 
     private int healthPoints;
     public int HealthPoints { 

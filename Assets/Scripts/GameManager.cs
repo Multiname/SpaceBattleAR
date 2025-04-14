@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
         bool firstPlayerisNext = CurrentPlayerIndex == 0;
         spaceshipsManager.SetSpaceshipsFriendliness(firstPlayerisNext);
 
+        spaceshipsManager.MoveSpaceshipsForward(CurrentPlayerIndex);
+
         uiManager.SwitchToCurrentPlayersCards(CurrentPlayerIndex);
         uiManager.PullCard();
     }

@@ -54,4 +54,20 @@ public class Battlefield : MonoBehaviour
         }
         return null;
     }
+
+    public void TryToMoveSpaceshipForward(int playerIndex, Spaceship spaceship) {
+        int directionMultiplier = 1;
+        if (playerIndex == 1) {
+            directionMultiplier = -1;
+        }
+        
+        var nextRow = spaceship.cell.Row + directionMultiplier;
+        if (nextRow < cells.Length && nextRow >= 0) {
+            var nextCell = cells[nextRow][spaceship.cell.Column];
+            if (!nextCell.IsOccupied()) {
+                spaceship.cell.DetachSpaceship();
+                nextCell.AttachSpaceship(spaceship);
+            }
+        }
+    }
 }

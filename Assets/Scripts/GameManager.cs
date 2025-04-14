@@ -34,7 +34,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void EndTurn() {
+        spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, false);
         CurrentPlayerIndex = ++CurrentPlayerIndex % 2;
+        spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, true);
 
         bool firstPlayerisNext = CurrentPlayerIndex == 0;
         spaceshipsManager.SetSpaceshipsFriendliness(firstPlayerisNext);

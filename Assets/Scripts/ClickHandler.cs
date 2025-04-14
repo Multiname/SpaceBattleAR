@@ -88,7 +88,7 @@ public class ClickHandler : MonoBehaviour
                         selectedEnemySpaceship = null;
                     }
                 } else if (selectedAllySpaceship != null) {
-                    if (spaceship == selectedEnemySpaceship) {
+                    if (spaceship == selectedEnemySpaceship && selectedAllySpaceship.ActionAvailable) {
                         uiManager.AttackSpaceship(selectedAllySpaceship, selectedEnemySpaceship);
                         UnselectSpaceships();
                     } else {

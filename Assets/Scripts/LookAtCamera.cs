@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthPointsText : MonoBehaviour
+public class LookAtCamera : MonoBehaviour
 {
     private Camera mainCamera;
 
@@ -10,5 +10,6 @@ public class HealthPointsText : MonoBehaviour
 
     private void Update() {
         transform.LookAt(mainCamera.transform);
+        transform.Rotate(new(90, 0, 0));
     }
 }

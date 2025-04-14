@@ -37,8 +37,15 @@ public class SpaceshipsManager : MonoBehaviour
         }
     }
 
+    public void SetActionAvailableToSpaceships(int index, bool available) {
+        foreach (var spaceship in spaceships[index]) {
+            spaceship.ActionAvailable = available;
+        }
+    }
+
     public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
         target.HealthPoints -= attacker.Card.Damage;
+        attacker.ActionAvailable = false;
         if (target.HealthPoints <= 0) {
             spaceships[++playerIndex % 2].Remove(target);
             Destroy(target.gameObject);

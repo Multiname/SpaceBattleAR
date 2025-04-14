@@ -9,6 +9,18 @@ public class Spaceship : MonoBehaviour
     public Card Card { get; private set; }
     [SerializeField]
     private TextMeshPro healthPointsText;
+    [SerializeField]
+    private GameObject actionAvailableObject;
+    private bool actionAvailable = true;
+    public bool ActionAvailable {
+        set {
+            actionAvailable = value;
+            actionAvailableObject.SetActive(value);
+        }
+        get {
+            return actionAvailable;
+        }
+    }
     
     private Color teamColor;
     public bool Friendly { get; private set; } = true;

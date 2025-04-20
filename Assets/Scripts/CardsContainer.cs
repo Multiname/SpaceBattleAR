@@ -46,6 +46,9 @@ public class CardsContainer : MonoBehaviour
 
         MoveCardAtPosition(newCard, cards[currentPlayerIndex].Count);
 
+        newCard.SetHealthpointsText(newCard.HealthPoints);
+        newCard.SetDamageText(newCard.Damage);
+
         cards[currentPlayerIndex].Add(newCard);
 
         AdaptContainerWidth();
@@ -85,7 +88,7 @@ public class CardsContainer : MonoBehaviour
         }
     }
 
-    public void ShowCardInfo(Sprite sprite) {
-        uiManager.ShowCardInfo(sprite);
+    public void ShowCardInfo(Sprite sprite, int healthpoints, int damage) {
+        uiManager.ShowCardInfo(sprite, healthpoints, damage);
     }
 }

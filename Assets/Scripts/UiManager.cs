@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,14 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private SpaceshipsCardsContainer spaceshipsCardsContainer;
     [SerializeField]
+    private TextMeshProUGUI allySpaceshipCardHealthpoints;
+    [SerializeField]
+    private TextMeshProUGUI allySpaceshipCardDamage;
+    [SerializeField]
+    private TextMeshProUGUI enemySpaceshipCardHealthpoints;
+    [SerializeField]
+    private TextMeshProUGUI enemySpaceshipCardDamage;
+    [SerializeField]
     private GameManager gameManager;
     [SerializeField]
     private GameObject cardsScrollSpace;
@@ -16,6 +25,10 @@ public class UiManager : MonoBehaviour
     private GameObject nextTurnButton;
     [SerializeField]
     private Image cardInfo;
+    [SerializeField]
+    private TextMeshProUGUI cardInfoHealthpoints;
+    [SerializeField]
+    private TextMeshProUGUI cardInfoDamage;
     [SerializeField]
     private ClickHandler clickHandler;
     [SerializeField]
@@ -27,8 +40,11 @@ public class UiManager : MonoBehaviour
         nextTurnButton.SetActive(active);
     }
 
-    public void ShowCardInfo(Sprite sprite) {
+    public void ShowCardInfo(Sprite sprite, int healthpoints, int damage) {
         cardInfo.sprite = sprite;
+        cardInfoHealthpoints.SetText(healthpoints.ToString());
+        cardInfoDamage.SetText(damage.ToString());
+
         cardInfo.GameObject().SetActive(true);
         SetNextTurnButtonActive(false);
         clickBlock.SetActive(true);
@@ -45,6 +61,9 @@ public class UiManager : MonoBehaviour
 
     public void ShowSpaceshipInfo(Spaceship spaceship) {
         cardInfo.sprite = spaceship.Card.Image.sprite;
+        cardInfoHealthpoints.SetText(spaceship.HealthPoints.ToString());
+        cardInfoDamage.SetText(spaceship.Card.Damage.ToString());
+
         cardInfo.GameObject().SetActive(true);
         SetNextTurnButtonActive(false);
     }
@@ -56,16 +75,20 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    public void SelectAllySpaceship(Sprite sprite) {
+    public void SelectAllySpaceship(Spaceship spaceship) {
         cardsScrollSpace.SetActive(false);
         spaceshipsCardsContainer.gameObject.SetActive(true);
-        spaceshipsCardsContainer.ShowAllySpaceshipCard(sprite);
+        spaceshipsCardsContainer.ShowAllySpaceshipCard(spaceship.Card.Image.sprite);
+        allySpaceshipCardHealthpoints.SetText(spaceship.HealthPoints.ToString());
+        allySpaceshipCardDamage.SetText(spaceship.Card.Damage.ToString());
         SetNextTurnButtonActive(false);
         spaceshipSelected = true;
     }
 
-    public void SelectEnemySpaceship(Sprite sprite) {
-        spaceshipsCardsContainer.ShowEnemySpaceshipCard(sprite);
+    public void SelectEnemySpaceship(Spaceship spaceship) {
+        spaceshipsCardsContainer.ShowEnemySpaceshipCard(spaceship.Card.Image.sprite);
+        enemySpaceshipCardHealthpoints.SetText(spaceship.HealthPoints.ToString());
+        enemySpaceshipCardDamage.SetText(spaceship.Card.Damage.ToString());
     }
 
     public void UnselectEnemySpaceship() {
@@ -74,6 +97,7 @@ public class UiManager : MonoBehaviour
 
     public void UnselectSpaceships() {
         cardsScrollSpace.SetActive(true);
+        spaceshipsCardsContainer.HideEnemySpaceshipCard();
         spaceshipsCardsContainer.gameObject.SetActive(false);
         SetNextTurnButtonActive(true);
         spaceshipSelected = false;

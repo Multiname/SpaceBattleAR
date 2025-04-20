@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +10,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private ScrollRect scrollSpace;
     [field: SerializeField]
     public Image Image { get; private set; }
+    [SerializeField]
+    private TextMeshProUGUI healthpointsText;
+    [SerializeField]
+    private TextMeshProUGUI damageText;
 
     [field: SerializeField]
     public Spaceship Spaceship { get; private set; }
@@ -77,7 +82,15 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!scrolling && !dragging) {
-            cardsContainer.ShowCardInfo(Image.sprite);
+            cardsContainer.ShowCardInfo(Image.sprite, HealthPoints, Damage);
         }
+    }
+
+    public void SetHealthpointsText(int healthpoints) {
+        healthpointsText.SetText(healthpoints.ToString());
+    }
+
+    public void SetDamageText(int damage) {
+        damageText.SetText(damage.ToString());
     }
 }

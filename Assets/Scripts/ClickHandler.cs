@@ -32,13 +32,13 @@ public class ClickHandler : MonoBehaviour
             List<RaycastResult> clickedUi = new();
             EventSystem.current.RaycastAll(pointerEventData, clickedUi);
             foreach (var ui in clickedUi) {
-                Debug.Log("UI: " + ui.gameObject.name);
+                Debug.Log((click ? "(Click) " : "(Release) ") + "UI: " + ui.gameObject.name);
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             GameObject clickedObject = null;
             if (Physics.Raycast(ray, out var hitted)) {
-                Debug.Log("3D: " + hitted.collider.gameObject.name);
+                Debug.Log((click ? "(Click) " : "(Release) ") + "3D: " + hitted.collider.gameObject.name);
                 clickedObject = hitted.collider.gameObject;
             }
 
@@ -80,7 +80,7 @@ public class ClickHandler : MonoBehaviour
 
                     selectedAllySpaceship = spaceship;
                     spaceship.Select();
-                    uiManager.SelectAllySpaceship(spaceship.Card.Image.sprite);
+                    uiManager.SelectAllySpaceship(spaceship);
 
                     if (selectedEnemySpaceship != null) {
                         uiManager.UnselectEnemySpaceship();
@@ -98,7 +98,7 @@ public class ClickHandler : MonoBehaviour
 
                         selectedEnemySpaceship = spaceship;
                         spaceship.Select();
-                        uiManager.SelectEnemySpaceship(spaceship.Card.Image.sprite);
+                        uiManager.SelectEnemySpaceship(spaceship);
                     }
                 }
             } else if (selectedAllySpaceship != null) {
@@ -133,6 +133,7 @@ public class ClickHandler : MonoBehaviour
 
         if (selectedEnemySpaceship != null) {
             selectedEnemySpaceship.Unselect();
+            selectedEnemySpaceship = null;
         }
     }
 }

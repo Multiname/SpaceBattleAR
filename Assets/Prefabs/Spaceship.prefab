@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6763935454721684822}
   - component: {fileID: 2886818419271281545}
   - component: {fileID: 2190596513163829802}
+  - component: {fileID: 5611735003468474550}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Untagged
@@ -51,6 +52,7 @@ MonoBehaviour:
   <Card>k__BackingField: {fileID: 4012901404515908612, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
   healthPointsText: {fileID: 4066718230303181390}
   actionAvailableObject: {fileID: 5781979118770286952}
+  <Skill>k__BackingField: {fileID: 5611735003468474550}
   cell: {fileID: 0}
 --- !u!65 &2190596513163829802
 BoxCollider:
@@ -73,6 +75,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5, y: 0.9, z: 4.1}
   m_Center: {x: 0.15, y: 0.85, z: -0.05}
+--- !u!114 &5611735003468474550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3097886974903159623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6156889b972ef3249be340bda8001cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceship: {fileID: 2886818419271281545}
 --- !u!1 &5781979118770286952
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,7 +55,7 @@ public class Battlefield : MonoBehaviour
         return null;
     }
 
-    public void TryToMoveSpaceshipForward(int playerIndex, Spaceship spaceship) {
+    public bool TryToMoveSpaceshipForward(int playerIndex, Spaceship spaceship) {
         int directionMultiplier = 1;
         if (playerIndex == 1) {
             directionMultiplier = -1;
@@ -67,7 +67,10 @@ public class Battlefield : MonoBehaviour
             if (!nextCell.IsOccupied()) {
                 spaceship.cell.DetachSpaceship();
                 nextCell.AttachSpaceship(spaceship);
+                return true;
             }
         }
+
+        return false;
     }
 }

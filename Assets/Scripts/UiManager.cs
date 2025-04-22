@@ -10,14 +10,6 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private SpaceshipsCardsContainer spaceshipsCardsContainer;
     [SerializeField]
-    private TextMeshProUGUI allySpaceshipCardHealthpoints;
-    [SerializeField]
-    private TextMeshProUGUI allySpaceshipCardDamage;
-    [SerializeField]
-    private TextMeshProUGUI enemySpaceshipCardHealthpoints;
-    [SerializeField]
-    private TextMeshProUGUI enemySpaceshipCardDamage;
-    [SerializeField]
     private GameManager gameManager;
     [SerializeField]
     private GameObject cardsScrollSpace;
@@ -78,17 +70,13 @@ public class UiManager : MonoBehaviour
     public void SelectAllySpaceship(Spaceship spaceship) {
         cardsScrollSpace.SetActive(false);
         spaceshipsCardsContainer.gameObject.SetActive(true);
-        spaceshipsCardsContainer.ShowAllySpaceshipCard(spaceship.Card.Image.sprite);
-        allySpaceshipCardHealthpoints.SetText(spaceship.HealthPoints.ToString());
-        allySpaceshipCardDamage.SetText(spaceship.Card.Damage.ToString());
+        spaceshipsCardsContainer.ShowAllySpaceshipCard(spaceship);
         SetNextTurnButtonActive(false);
         spaceshipSelected = true;
     }
 
     public void SelectEnemySpaceship(Spaceship spaceship) {
-        spaceshipsCardsContainer.ShowEnemySpaceshipCard(spaceship.Card.Image.sprite);
-        enemySpaceshipCardHealthpoints.SetText(spaceship.HealthPoints.ToString());
-        enemySpaceshipCardDamage.SetText(spaceship.Card.Damage.ToString());
+        spaceshipsCardsContainer.ShowEnemySpaceshipCard(spaceship);
     }
 
     public void UnselectEnemySpaceship() {
@@ -101,13 +89,6 @@ public class UiManager : MonoBehaviour
         spaceshipsCardsContainer.gameObject.SetActive(false);
         SetNextTurnButtonActive(true);
         spaceshipSelected = false;
-    }
-
-    public bool TryToSelectTargetSpaceship(Sprite sprite) {
-        if (spaceshipsCardsContainer.gameObject.activeSelf) {
-            spaceshipsCardsContainer.ShowEnemySpaceshipCard(sprite);
-        }
-        return true;
     }
 
     public void PullCard() {

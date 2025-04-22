@@ -72,6 +72,8 @@ public class ClickHandler : MonoBehaviour
             } else if (cardInfoShown) {
                 uiManager.HideCardInfo();
                 cardInfoShown = false;
+            } else if (clickedUi.Count > 0 && clickedUi.Select(ui => ui.CompareTag("Button")).Count() != 0) {
+                UnselectSpaceships();
             } else if (clickedObject != null && clickedObject.TryGetComponent<Spaceship>(out var spaceship) && spaceship == pressedSpaceship) {
                 if (spaceship.Friendly) {
                     if (selectedAllySpaceship != null) {
@@ -135,5 +137,9 @@ public class ClickHandler : MonoBehaviour
             selectedEnemySpaceship.Unselect();
             selectedEnemySpaceship = null;
         }
+    }
+
+    public void UseSpaceshipSkill() {
+        selectedAllySpaceship.Skill.UseSkill();
     }
 }

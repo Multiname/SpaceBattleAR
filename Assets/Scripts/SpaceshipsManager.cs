@@ -18,10 +18,11 @@ public class SpaceshipsManager : MonoBehaviour
         battlefield.SetColumnsActive(playerIndex, active);
     }
 
-    public bool TryToSpawnSpaceship(int playerIndex, Spaceship spaceship) {
+    public bool TryToSpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager) {
         var selectedColumn = battlefield.CheckColumnSelection();
         if (selectedColumn != -1) {
             var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, playerIndex, selectedColumn);
+            spawnedSpaceship.Skill.GameManager = gameManager;
             spaceships[playerIndex].Add(spawnedSpaceship);
             return true;
         }
@@ -47,6 +48,10 @@ public class SpaceshipsManager : MonoBehaviour
         foreach (var spaceship in spaceships[index]) {
             battlefield.TryToMoveSpaceshipForward(index, spaceship);
         }
+    }
+
+    public bool TryToMoveSpaceshipForward(int playerIndex, Spaceship spaceship) {
+        return battlefield.TryToMoveSpaceshipForward(playerIndex, spaceship);
     }
 
     public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {

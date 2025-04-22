@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool TryToSpawnSpaceship(Spaceship spaceship) {
-        return spaceshipsManager.TryToSpawnSpaceship(CurrentPlayerIndex, spaceship);
+        return spaceshipsManager.TryToSpawnSpaceship(CurrentPlayerIndex, spaceship, this);
     }
 
     public void SetBattlefieldColumnsActive(bool active) {
@@ -49,5 +49,9 @@ public class GameManager : MonoBehaviour
 
     public void AttackSpaceship(Spaceship attacker, Spaceship target) {
         spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
+    }
+
+    public bool TryToMoveSpaceshipForward(Spaceship spaceship) {
+        return spaceshipsManager.TryToMoveSpaceshipForward(CurrentPlayerIndex, spaceship);
     }
 }

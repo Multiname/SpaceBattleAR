@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(Skill))]
 public class Spaceship : MonoBehaviour
 {
     [SerializeField]
@@ -21,6 +22,8 @@ public class Spaceship : MonoBehaviour
             return actionAvailable;
         }
     }
+    [field: SerializeField]
+    public Skill Skill { get; private set; }
     
     private Color teamColor;
     public bool Friendly { get; private set; } = true;

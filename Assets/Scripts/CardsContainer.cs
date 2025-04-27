@@ -4,12 +4,13 @@ using UnityEngine;
 public class CardsContainer : MonoBehaviour
 {
     [SerializeField]
-    private Card card;
+    private List<Card> initialCardPool = new();
     [SerializeField]
     private UiManager uiManager;
 
     private RectTransform rt;
 
+    private List<Card>[] currentCardPool = new List<Card>[2] { new(), new() };
     private List<Card>[] cards = new List<Card>[2] { new(), new() };
     private float scrollSpaceWidth;
     private float cardWidth = 0;
@@ -21,6 +22,8 @@ public class CardsContainer : MonoBehaviour
         scrollSpaceWidth = transform.parent.GetComponent<RectTransform>().rect.width;
 
         rt.sizeDelta = new Vector2(scrollSpaceWidth, rt.sizeDelta.y);
+
+        currentCardPool = new List<Card>[2] { new(initialCardPool), new(initialCardPool) };
     }
 
     public void SwitchToCurrentPlayer(int playerIndex) {
@@ -37,6 +40,14 @@ public class CardsContainer : MonoBehaviour
     }
 
     public void PullCard() {
+        if (currentCardPool[currentPlayerIndex].Count == 0) {
+            currentCardPool[currentPlayerIndex] = new(initialCardPool);
+        }
+
+        int cardIndex = Random.Range(0, currentCardPool[currentPlayerIndex].Count);
+        Card card = currentCardPool[currentPlayerIndex][cardIndex];
+        currentCardPool[currentPlayerIndex].RemoveAt(cardIndex);
+
         var newCard = Instantiate(card, transform.GetChild(0));
         newCard.cardsContainer = this;
 

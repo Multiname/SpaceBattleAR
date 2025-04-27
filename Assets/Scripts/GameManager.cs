@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         uiManager.PullCard();
-        uiManager.PullCard();
         uiManager.SetNextTurnButtonActive(true);
     }
 

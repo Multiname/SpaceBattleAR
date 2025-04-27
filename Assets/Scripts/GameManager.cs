@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
         spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
     }
 
+    public void EliminateSpaceship(Spaceship target) {
+        spaceshipsManager.EliminateSpaceship(target, CurrentPlayerIndex);
+    }
+
     public bool TryToMoveSpaceshipForward(Spaceship spaceship) {
         return spaceshipsManager.TryToMoveSpaceshipForward(CurrentPlayerIndex, spaceship);
     }

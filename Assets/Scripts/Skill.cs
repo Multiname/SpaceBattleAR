@@ -8,6 +8,11 @@ public abstract class Skill : MonoBehaviour
     [HideInInspector]
     public GameManager GameManager { protected get; set; }
 
-    abstract public void UseSkill();
+    [HideInInspector]
+    public virtual bool Targeted { get => false; }
+
     public bool Available { get; protected set; } = true;
+
+    public abstract void Prepare();
+    public abstract void Discharge();
 }

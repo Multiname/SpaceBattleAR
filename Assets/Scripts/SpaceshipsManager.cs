@@ -58,9 +58,13 @@ public class SpaceshipsManager : MonoBehaviour
         target.HealthPoints -= attacker.Card.Damage;
         attacker.ActionAvailable = false;
         if (target.HealthPoints <= 0) {
-            target.cell.DetachSpaceship();
-            spaceships[++playerIndex % 2].Remove(target);
-            Destroy(target.gameObject);
+            EliminateSpaceship(target, playerIndex);
         }
+    }
+
+    public void EliminateSpaceship(Spaceship target, int playerIndex) {
+        target.cell.DetachSpaceship();
+        spaceships[++playerIndex % 2].Remove(target);
+        Destroy(target.gameObject);
     }
 }

@@ -72,7 +72,7 @@ public class ClickHandler : MonoBehaviour
             } else if (cardInfoShown) {
                 uiManager.HideCardInfo();
                 cardInfoShown = false;
-            } else if (clickedUi.Count > 0 && clickedUi.Select(ui => ui.CompareTag("Button")).Count() != 0) {
+            } else if (clickedUi.Count > 0 && clickedUi.Where(ui => ui.CompareTag("Button")).Count() != 0) {
                 UnselectSpaceships();
             } else if (clickedObject != null && clickedObject.TryGetComponent<Spaceship>(out var spaceship) && spaceship == pressedSpaceship) {
                 if (spaceship.Friendly) {
@@ -140,6 +140,7 @@ public class ClickHandler : MonoBehaviour
     }
 
     public void UseSpaceshipSkill() {
-        selectedAllySpaceship.Skill.UseSkill();
+        SkillEventManager.SkillUsed?.Invoke();
+        SkillEventManager.TargetedSkillUsed?.Invoke(selectedEnemySpaceship);
     }
 }

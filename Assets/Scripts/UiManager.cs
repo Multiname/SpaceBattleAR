@@ -85,7 +85,7 @@ public class UiManager : MonoBehaviour
 
     public void UnselectSpaceships() {
         cardsScrollSpace.SetActive(true);
-        spaceshipsCardsContainer.HideEnemySpaceshipCard();
+        spaceshipsCardsContainer.Hide();
         spaceshipsCardsContainer.gameObject.SetActive(false);
         SetNextTurnButtonActive(true);
         spaceshipSelected = false;

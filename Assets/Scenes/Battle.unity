@@ -449,8 +449,6 @@ GameObject:
   m_Component:
   - component: {fileID: 348491667}
   - component: {fileID: 348491666}
-  - component: {fileID: 348491669}
-  - component: {fileID: 348491668}
   - component: {fileID: 348491670}
   - component: {fileID: 348491671}
   m_Layer: 0
@@ -493,33 +491,6 @@ Transform:
   - {fileID: 475105361}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &348491668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348491665}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RaycastPrefab: {fileID: 0}
---- !u!114 &348491669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348491665}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 6827324014972930263, guid: 35662116f01b11a49aafd2bf9933398a, type: 3}
-  m_DetectionMode: -1
 --- !u!114 &348491670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4eae4b191c2c64b8a8ef6c243aa1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastManager: {fileID: 348491668}
+  raycastManager: {fileID: 0}
   ObjectToPlace: {fileID: 4419874500330567273, guid: 94c59d430a7287b48b21928d3d602bd5, type: 3}
   arCamera: {fileID: 2062529409}
 --- !u!4 &989740456

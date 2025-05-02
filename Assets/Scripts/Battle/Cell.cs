@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
+    public enum OccupationState {
+        UNOCCUPIED,
+        FRIENDLY,
+        HOSTILE
+    }
+
     [field: SerializeField]
     public int Row { get; private set; }
     [field: SerializeField]
@@ -32,7 +38,12 @@ public class Cell : MonoBehaviour
         spaceship = null;
     }
 
-    public bool IsOccupied() {
-        return spaceship != null;
+    public OccupationState CheckOccupationState() {
+        if (spaceship == null) {
+            return OccupationState.UNOCCUPIED;
+        } else if (spaceship.Friendly) {
+            return OccupationState.FRIENDLY;
+        }
+        return OccupationState.HOSTILE;
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace System.Runtime.CompilerServices {
         internal static class IsExternalInit {}
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour
     private UiManager uiManager;
     [SerializeField]
     private SpaceshipsManager spaceshipsManager;
+
+    [SerializeField]
+    private int winReward = 10;
     
     public int CurrentPlayerIndex { get; private set; } = 0;
 
@@ -33,6 +37,17 @@ public class GameManager : MonoBehaviour
     }
 
     public void EndTurn() {
+        if (spaceshipsManager.IsFirstRowCaptured(CurrentPlayerIndex)) {
+            Debug.Log($"Player #{(CurrentPlayerIndex + 1) % 2} won");
+
+            int coins = PlayerPrefs.GetInt("PlayerCoins", 0);
+            coins += winReward;
+            PlayerPrefs.SetInt("PlayerCoins", coins);
+
+            SceneManager.LoadScene("Menu");
+            return;
+        }
+
         spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, false);
         CurrentPlayerIndex = ++CurrentPlayerIndex % 2;
         spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, true);

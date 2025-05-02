@@ -67,4 +67,8 @@ public class SpaceshipsManager : MonoBehaviour
         spaceships[++playerIndex % 2].Remove(target);
         Destroy(target.gameObject);
     }
+
+    public bool IsFirstRowCaptured(int playerIndex) {
+        return battlefield.IsFirstRowCaptured(playerIndex);
+    }
 }

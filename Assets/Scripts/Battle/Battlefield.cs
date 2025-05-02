@@ -36,7 +36,7 @@ public class Battlefield : MonoBehaviour
         }
 
         for (var i = 0; i < cells[playerRow].Length; ++i) {
-            if (cells[playerRow][i].IsOccupied()) {
+            if (cells[playerRow][i].CheckOccupationState() != Cell.OccupationState.UNOCCUPIED) {
                 battlefieldColumns[i].occupied = true;
             }
         }
@@ -49,7 +49,7 @@ public class Battlefield : MonoBehaviour
             row = cells.Length - 1 - row;
         }
 
-        if (!cells[row][column].IsOccupied()) {
+        if (cells[row][column].CheckOccupationState() == Cell.OccupationState.UNOCCUPIED) {
             return cells[row][column].PlaceSpaceship(spaceship, playerIndex);
         }
         return null;
@@ -64,7 +64,7 @@ public class Battlefield : MonoBehaviour
         var nextRow = spaceship.cell.Row + directionMultiplier;
         if (nextRow < cells.Length && nextRow >= 0) {
             var nextCell = cells[nextRow][spaceship.cell.Column];
-            if (!nextCell.IsOccupied()) {
+            if (nextCell.CheckOccupationState() == Cell.OccupationState.UNOCCUPIED) {
                 spaceship.cell.DetachSpaceship();
                 nextCell.AttachSpaceship(spaceship);
                 return true;
@@ -72,5 +72,19 @@ public class Battlefield : MonoBehaviour
         }
 
         return false;
+    }
+
+    public bool IsFirstRowCaptured(int playerIndex) {
+        int row = playerIndex;
+        if (playerIndex == 1) {
+            row = cells.Length - 1;
+        }
+
+        foreach (var cell in cells[row]) {
+            if (cell.CheckOccupationState() != Cell.OccupationState.HOSTILE) {
+                return false;
+            }
+        }
+        return true;
     }
 }

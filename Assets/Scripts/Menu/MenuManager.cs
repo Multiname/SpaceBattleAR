@@ -6,13 +6,18 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI coinsText;
+    [SerializeField]
+    private UnlockedCards unlockedCards;
 
     private void Start() {
-        int coins = PlayerPrefs.GetInt("PlayerCoins", 0);
-        coinsText.SetText(coins.ToString());
+        coinsText.SetText(unlockedCards.PlayerCoins.ToString());
     }
 
     public void StartGame() {
         SceneManager.LoadScene("Battle");
+    }
+
+    public void OpenCollection() {
+        SceneManager.LoadScene("Collection");
     }
 }

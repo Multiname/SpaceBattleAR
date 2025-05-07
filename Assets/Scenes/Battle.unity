@@ -247,6 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 2056617461}
   spaceshipsManager: {fileID: 1845884051}
+  unlockedCards: {fileID: 11400000, guid: 029c3daea9e32d444bff07a7e413a767, type: 2}
+  winReward: 10
 --- !u!4 &59640439
 Transform:
   m_ObjectHideFlags: 0

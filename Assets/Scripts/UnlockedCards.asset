@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e72eeb0263f8184fb8e8c8d5805cfb4, type: 3}
+  m_Name: UnlockedCards
+  m_EditorClassIdentifier: 
+  cardStates:
+  - card: {fileID: 4012901404515908612, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
+    unlocked: 0
+  - card: {fileID: 4012901404515908612, guid: e79c75706b663e843af8c25252f1e6de, type: 3}
+    unlocked: 1

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private UiManager uiManager;
     [SerializeField]
     private SpaceshipsManager spaceshipsManager;
+    [SerializeField]
+    private UnlockedCards unlockedCards;
 
     [SerializeField]
     private int winReward = 10;
@@ -40,9 +42,7 @@ public class GameManager : MonoBehaviour
         if (spaceshipsManager.IsFirstRowCaptured(CurrentPlayerIndex)) {
             Debug.Log($"Player #{(CurrentPlayerIndex + 1) % 2} won");
 
-            int coins = PlayerPrefs.GetInt("PlayerCoins", 0);
-            coins += winReward;
-            PlayerPrefs.SetInt("PlayerCoins", coins);
+            unlockedCards.PlayerCoins += winReward;
 
             SceneManager.LoadScene("Menu");
             return;

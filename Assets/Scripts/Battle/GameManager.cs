@@ -21,13 +21,13 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         uiManager.PullCard();
-        uiManager.SetNextTurnButtonActive(true);
+        uiManager.SetTopButtonsActive(true);
     }
 
     public void CreateBattlefield(GameObject origin) {
         spaceshipsManager.CreateBattlefield(origin);
         uiManager.PullCard();
-        uiManager.SetNextTurnButtonActive(true);
+        uiManager.SetTopButtonsActive(true);
     }
 
     public bool TryToSpawnSpaceship(Spaceship spaceship) {
@@ -71,5 +71,9 @@ public class GameManager : MonoBehaviour
 
     public bool TryToMoveSpaceshipForward(Spaceship spaceship) {
         return spaceshipsManager.TryToMoveSpaceshipForward(CurrentPlayerIndex, spaceship);
+    }
+
+    public void CancelBattle() {
+        SceneManager.LoadScene("Menu");
     }
 }

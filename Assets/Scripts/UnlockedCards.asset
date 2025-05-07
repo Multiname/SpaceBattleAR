@@ -17,3 +17,4 @@ MonoBehaviour:
     unlocked: 0
   - card: {fileID: 4012901404515908612, guid: e79c75706b663e843af8c25252f1e6de, type: 3}
     unlocked: 1
+  PlayerCoins: 0

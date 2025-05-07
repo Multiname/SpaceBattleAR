@@ -14,7 +14,7 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject cardsScrollSpace;
     [SerializeField]
-    private GameObject nextTurnButton;
+    private GameObject topButtons;
     [SerializeField]
     private Image cardInfo;
     [SerializeField]
@@ -28,8 +28,8 @@ public class UiManager : MonoBehaviour
 
     private bool spaceshipSelected = false;
 
-    public void SetNextTurnButtonActive(bool active) {
-        nextTurnButton.SetActive(active);
+    public void SetTopButtonsActive(bool active) {
+        topButtons.SetActive(active);
     }
 
     public void ShowCardInfo(Sprite sprite, int healthpoints, int damage) {
@@ -38,7 +38,7 @@ public class UiManager : MonoBehaviour
         cardInfoDamage.SetText(damage.ToString());
 
         cardInfo.GameObject().SetActive(true);
-        SetNextTurnButtonActive(false);
+        SetTopButtonsActive(false);
         clickBlock.SetActive(true);
         clickHandler.SetCardInfoShown();
     }
@@ -47,7 +47,7 @@ public class UiManager : MonoBehaviour
         cardInfo.GameObject().SetActive(false);
         clickBlock.SetActive(false);
         if (!spaceshipSelected) {
-            SetNextTurnButtonActive(true);
+            SetTopButtonsActive(true);
         }
     }
 
@@ -57,13 +57,13 @@ public class UiManager : MonoBehaviour
         cardInfoDamage.SetText(spaceship.Card.Damage.ToString());
 
         cardInfo.GameObject().SetActive(true);
-        SetNextTurnButtonActive(false);
+        SetTopButtonsActive(false);
     }
 
     public void HideSpaceshipInfo() {
         cardInfo.GameObject().SetActive(false);
         if (!spaceshipSelected) {
-            SetNextTurnButtonActive(true);
+            SetTopButtonsActive(true);
         }
     }
 
@@ -71,7 +71,7 @@ public class UiManager : MonoBehaviour
         cardsScrollSpace.SetActive(false);
         spaceshipsCardsContainer.gameObject.SetActive(true);
         spaceshipsCardsContainer.ShowAllySpaceshipCard(spaceship);
-        SetNextTurnButtonActive(false);
+        SetTopButtonsActive(false);
         spaceshipSelected = true;
     }
 
@@ -87,7 +87,7 @@ public class UiManager : MonoBehaviour
         cardsScrollSpace.SetActive(true);
         spaceshipsCardsContainer.Hide();
         spaceshipsCardsContainer.gameObject.SetActive(false);
-        SetNextTurnButtonActive(true);
+        SetTopButtonsActive(true);
         spaceshipSelected = false;
     }
 

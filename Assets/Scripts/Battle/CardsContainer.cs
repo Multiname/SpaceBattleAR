@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardsContainer : MonoBehaviour
 {
     [SerializeField]
-    private List<Card> initialCardPool = new();
+    private UnlockedCards unlockedCards;
     [SerializeField]
     private UiManager uiManager;
 
@@ -23,7 +23,8 @@ public class CardsContainer : MonoBehaviour
 
         rt.sizeDelta = new Vector2(scrollSpaceWidth, rt.sizeDelta.y);
 
-        currentCardPool = new List<Card>[2] { new(initialCardPool), new(initialCardPool) };
+        var unlockedCardsList = unlockedCards.GetUnlockedCards();
+        currentCardPool = new List<Card>[2] { new(unlockedCardsList), new(unlockedCardsList) };
     }
 
     public void SwitchToCurrentPlayer(int playerIndex) {
@@ -41,7 +42,7 @@ public class CardsContainer : MonoBehaviour
 
     public void PullCard() {
         if (currentCardPool[currentPlayerIndex].Count == 0) {
-            currentCardPool[currentPlayerIndex] = new(initialCardPool);
+            currentCardPool[currentPlayerIndex] = new(unlockedCards.GetUnlockedCards());
         }
 
         int cardIndex = Random.Range(0, currentCardPool[currentPlayerIndex].Count);

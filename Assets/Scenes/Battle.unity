@@ -212,9 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f968515977e504eac8d812fcc47174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCardPool:
-  - {fileID: 4012901404515908612, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
-  - {fileID: 4012901404515908612, guid: e79c75706b663e843af8c25252f1e6de, type: 3}
+  unlockedCards: {fileID: 11400000, guid: 029c3daea9e32d444bff07a7e413a767, type: 2}
   uiManager: {fileID: 2056617461}
 --- !u!1 &59640437
 GameObject:

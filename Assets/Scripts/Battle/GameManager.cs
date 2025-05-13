@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private UiManager uiManager;
     [SerializeField]
+    private NetworkTransmitter networkTransmitter;
+    [SerializeField]
     private SpaceshipsManager spaceshipsManager;
     [SerializeField]
     private UnlockedCards unlockedCards;
@@ -17,17 +19,26 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int winReward = 10;
     
-    public int CurrentPlayerIndex { get; private set; } = 0;
+    public int CurrentPlayerIndex {
+        get => networkTransmitter.currentPlayerIndex.Value;
+        set => networkTransmitter.SetCurrentPlayerInderServerRpc(value);
+    }
 
+    // DEBUG
     private void Start() {
-        uiManager.PullCard();
-        uiManager.SetTopButtonsActive(true);
+        networkTransmitter.SetReadyServerRpc(new());
     }
 
     public void CreateBattlefield(GameObject origin) {
         spaceshipsManager.CreateBattlefield(origin);
-        uiManager.PullCard();
-        uiManager.SetTopButtonsActive(true);
+        networkTransmitter.SetReadyServerRpc(new());
+    }
+
+    public void StartGame() {
+        if (networkTransmitter.GetPlayerId() == CurrentPlayerIndex) {
+            uiManager.PullCard();
+            uiManager.SetTopButtonsActive(true);
+        }
     }
 
     public bool TryToSpawnSpaceship(Spaceship spaceship) {

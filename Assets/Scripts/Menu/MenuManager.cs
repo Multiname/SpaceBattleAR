@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void StartGame() {
-        SceneManager.LoadScene("Battle");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void OpenCollection() {

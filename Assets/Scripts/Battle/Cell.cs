@@ -15,12 +15,14 @@ public class Cell : MonoBehaviour
 
     private Spaceship spaceship;
 
-    public Spaceship PlaceSpaceship(Spaceship spaceship, bool hostile) {
+    public Spaceship PlaceSpaceship(Spaceship spaceship, int playerIndex, bool hostile) {
         var placedSpaceship = Instantiate(spaceship, transform);
         this.spaceship = placedSpaceship;
         placedSpaceship.cell = this;
-        if (hostile) {
+        if (playerIndex != 0) {
             placedSpaceship.transform.Rotate(new(0, 180, 0));
+        }
+        if (hostile) {
             placedSpaceship.SetFriendliness(false);
         }
         return this.spaceship;

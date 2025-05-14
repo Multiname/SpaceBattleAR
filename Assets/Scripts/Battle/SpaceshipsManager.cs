@@ -21,7 +21,7 @@ public class SpaceshipsManager : MonoBehaviour
     public int TryToSpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager) {
         var selectedColumn = battlefield.CheckColumnSelection();
         if (selectedColumn != -1) {
-            var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, false, selectedColumn);
+            var spawnedSpaceship = battlefield.SpawnSpaceship(playerIndex, spaceship, false, selectedColumn);
             spawnedSpaceship.Skill.GameManager = gameManager;
             spaceships[playerIndex].Add(spawnedSpaceship);
         }
@@ -29,7 +29,7 @@ public class SpaceshipsManager : MonoBehaviour
     }
 
     public void SpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager, int column) {
-        var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, true, column, -1);
+        var spawnedSpaceship = battlefield.SpawnSpaceship(playerIndex, spaceship, true, column);
         spawnedSpaceship.Skill.GameManager = gameManager;
         spaceships[playerIndex].Add(spawnedSpaceship);
     }

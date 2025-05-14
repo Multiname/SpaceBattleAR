@@ -44,13 +44,13 @@ public class Battlefield : MonoBehaviour
         battlefieldColumns[0].transform.parent.gameObject.SetActive(active);
     }
 
-    public Spaceship SpawnSpaceship(Spaceship spaceship, bool hostile, int column, int row = 0) {
-        if (row == -1) {
-            row = cells.Length - 1;
+    public Spaceship SpawnSpaceship(int playerIndex, Spaceship spaceship, bool hostile, int column, int row = 0) {
+        if (playerIndex != 0) {
+            row = cells.Length - 1 - row;
         }
 
         if (cells[row][column].CheckOccupationState() == Cell.OccupationState.UNOCCUPIED) {
-            return cells[row][column].PlaceSpaceship(spaceship, hostile);
+            return cells[row][column].PlaceSpaceship(spaceship, playerIndex, hostile);
         }
         return null;
     }

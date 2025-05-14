@@ -16,6 +16,8 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject topButtons;
     [SerializeField]
+    private GameObject nextTurnButton;
+    [SerializeField]
     private Image cardInfo;
     [SerializeField]
     private TextMeshProUGUI cardInfoHealthpoints;
@@ -30,6 +32,10 @@ public class UiManager : MonoBehaviour
 
     public void SetTopButtonsActive(bool active) {
         topButtons.SetActive(active);
+    }
+
+    public void SetNextTurnButtonActive(bool active) {
+        nextTurnButton.SetActive(active);
     }
 
     public void ShowCardInfo(Sprite sprite, int healthpoints, int damage) {
@@ -95,8 +101,8 @@ public class UiManager : MonoBehaviour
         cardsContainer.PullCard();
     }
 
-    public void SwitchToCurrentPlayersCards(int playerIndex) {
-        cardsContainer.SwitchToCurrentPlayer(playerIndex);
+    public void SetCardsDraggable(bool draggable) {
+        cardsContainer.SetCardsDraggable(draggable);
     }
 
     public void HandleCardDragBeginning() {

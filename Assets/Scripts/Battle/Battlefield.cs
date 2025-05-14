@@ -75,7 +75,7 @@ public class Battlefield : MonoBehaviour
     }
 
     public bool IsFirstRowCaptured(int playerIndex) {
-        int row = playerIndex;
+        int row = 0;
         if (playerIndex == 1) {
             row = cells.Length - 1;
         }

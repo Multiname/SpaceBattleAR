@@ -30,6 +30,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private bool dragging = false;
     private bool scrolling = false;
 
+    public bool draggable = true;
+
     [field: SerializeField]
     public int HealthPoints { get; private set; } = 2;
     [field: SerializeField]
@@ -59,7 +61,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         } else if (Mathf.Abs(eventData.position.x - dragStartingPosition.x) > scrollStartingThreshold) {
             scrolling = true;
             scrollSpace.OnBeginDrag(eventData);
-        } else if (eventData.position.y - dragStartingPosition.y > dragStartingThreshold) {
+        } else if (draggable && eventData.position.y - dragStartingPosition.y > dragStartingThreshold) {
             dragging = true;
             initialPosition = rt.anchoredPosition;
             transform.SetAsLastSibling();

@@ -10,10 +10,11 @@ public class NetworkTransmitter : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
 
-    private NetworkVariable<bool> hostIsReady = new(false);
-    private NetworkVariable<bool> clientIsReady = new(false);
+    private bool hostIsReady = false;
+    private bool clientIsReady = false;
 
-    public NetworkVariable<int> currentPlayerIndex = new(0);
+    [HideInInspector]
+    public int currentPlayerIndex = 0;
 
     private void Awake() {
         // currentPlayerIndex.Value = Random.Range(0, 2);
@@ -22,12 +23,12 @@ public class NetworkTransmitter : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetReadyServerRpc(ServerRpcParams serverRpcParams) {
         if (serverRpcParams.Receive.SenderClientId == OwnerClientId) {
-            hostIsReady.Value = true;
+            hostIsReady = true;
         } else {
-            clientIsReady.Value = true;
+            clientIsReady = true;
         }
 
-        if (hostIsReady.Value && clientIsReady.Value) {
+        if (hostIsReady && clientIsReady) {
             SetReadyClientRpc();
         }
     }
@@ -42,8 +43,13 @@ public class NetworkTransmitter : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetCurrentPlayerInderServerRpc(int index) {
-        currentPlayerIndex.Value = index;
+    public void SetCurrentPlayerIndexServerRpc(int index) {
+        SetCurrentPlayerIndexClientRpc(index);
+    }
+
+    [ClientRpc]
+    private void SetCurrentPlayerIndexClientRpc(int index) {
+        currentPlayerIndex = index;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -53,8 +59,20 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncSpaceshipSpawningClientRpc(int spaceshipIndex, int column) {
-        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex.Value) {
+        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
             gameManager.SyncSpaceshipSpawning(spaceshipIndex, column);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncTurnEndingServerRpc() {
+        SyncTurnEndingClientRpc();
+    }
+
+    [ClientRpc]
+    private void SyncTurnEndingClientRpc() {
+        if ((int)NetworkManager.Singleton.LocalClientId == currentPlayerIndex) {
+            gameManager.SyncTurnEnding();
         }
     }
 }

@@ -409,7 +409,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -692, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &237351560
 MonoBehaviour:
@@ -902,8 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 59640438}
   text: {fileID: 1567816719}
-  currentPlayerIndex:
-    m_InternalValue: 0
+  currentPlayerIndex: 0
 --- !u!1 &840678829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1030977175
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2635,7 +2634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1800457302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2653,7 +2652,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -692, y: 0}
+  m_SizeDelta: {x: -1658, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1800457303
 MonoBehaviour:
@@ -3225,6 +3224,7 @@ MonoBehaviour:
   gameManager: {fileID: 59640438}
   cardsScrollSpace: {fileID: 1546100574}
   topButtons: {fileID: 1030977174}
+  nextTurnButton: {fileID: 1800457301}
   cardInfo: {fileID: 1485438236}
   cardInfoHealthpoints: {fileID: 1096720850}
   cardInfoDamage: {fileID: 1748279621}

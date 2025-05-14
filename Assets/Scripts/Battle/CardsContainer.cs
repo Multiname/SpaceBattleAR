@@ -10,11 +10,10 @@ public class CardsContainer : MonoBehaviour
 
     private RectTransform rt;
 
-    private List<Card>[] currentCardPool = new List<Card>[2] { new(), new() };
-    private List<Card>[] cards = new List<Card>[2] { new(), new() };
+    private List<Card> currentCardPool = new();
+    private List<Card> cards = new();
     private float scrollSpaceWidth;
     private float cardWidth = 0;
-    private int currentPlayerIndex = 0;
 
     private void Start() {
         rt = GetComponent<RectTransform>();
@@ -23,31 +22,23 @@ public class CardsContainer : MonoBehaviour
 
         rt.sizeDelta = new Vector2(scrollSpaceWidth, rt.sizeDelta.y);
 
-        var unlockedCardsList = unlockedCards.GetUnlockedCards();
-        currentCardPool = new List<Card>[2] { new(unlockedCardsList), new(unlockedCardsList) };
+        currentCardPool = new(unlockedCards.GetUnlockedCards());
     }
 
-    public void SwitchToCurrentPlayer(int playerIndex) {
-        currentPlayerIndex = playerIndex;
-        foreach (var card in cards[(currentPlayerIndex + 1) % 2]) {
-            card.gameObject.SetActive(false);
+    public void SetCardsDraggable(bool draggable) {
+        foreach (var card in cards) {
+            card.draggable = draggable;
         }
-
-        foreach(var card in cards[currentPlayerIndex]) {
-            card.gameObject.SetActive(true);
-        }
-
-        AdaptContainerWidth();
     }
 
     public void PullCard() {
-        if (currentCardPool[currentPlayerIndex].Count == 0) {
-            currentCardPool[currentPlayerIndex] = new(unlockedCards.GetUnlockedCards());
+        if (currentCardPool.Count == 0) {
+            currentCardPool = new(unlockedCards.GetUnlockedCards());
         }
 
-        int cardIndex = Random.Range(0, currentCardPool[currentPlayerIndex].Count);
-        Card card = currentCardPool[currentPlayerIndex][cardIndex];
-        currentCardPool[currentPlayerIndex].RemoveAt(cardIndex);
+        int cardIndex = Random.Range(0, currentCardPool.Count);
+        Card card = currentCardPool[cardIndex];
+        currentCardPool.RemoveAt(cardIndex);
 
         var newCard = Instantiate(card, transform.GetChild(0));
         newCard.cardsContainer = this;
@@ -56,21 +47,21 @@ public class CardsContainer : MonoBehaviour
             cardWidth = newCard.Width;
         }
 
-        MoveCardAtPosition(newCard, cards[currentPlayerIndex].Count);
+        MoveCardAtPosition(newCard, cards.Count);
 
         newCard.SetHealthpointsText(newCard.HealthPoints);
         newCard.SetDamageText(newCard.Damage);
 
-        cards[currentPlayerIndex].Add(newCard);
+        cards.Add(newCard);
 
         AdaptContainerWidth();
     }
 
     private void RemoveCard(Card card) {
-        for (var i = cards[currentPlayerIndex].IndexOf(card) + 1; i < cards[currentPlayerIndex].Count; ++i) {
-            MoveCardAtPosition(cards[currentPlayerIndex][i], i - 1);
+        for (var i = cards.IndexOf(card) + 1; i < cards.Count; ++i) {
+            MoveCardAtPosition(cards[i], i - 1);
         }
-        cards[currentPlayerIndex].Remove(card);
+        cards.Remove(card);
         AdaptContainerWidth();
         Destroy(card.gameObject);
     }
@@ -82,7 +73,7 @@ public class CardsContainer : MonoBehaviour
     }
 
     private void AdaptContainerWidth() {
-        var containerWidth = (cardWidth + 50) * cards[currentPlayerIndex].Count + 50;
+        var containerWidth = (cardWidth + 50) * cards.Count + 50;
         if (containerWidth > scrollSpaceWidth) {
             rt.sizeDelta = new Vector2(containerWidth, rt.sizeDelta.y);
         }

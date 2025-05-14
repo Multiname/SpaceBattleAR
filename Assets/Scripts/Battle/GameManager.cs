@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     private int winReward = 10;
     
     public int CurrentPlayerIndex {
-        get => networkTransmitter.currentPlayerIndex.Value;
-        set => networkTransmitter.SetCurrentPlayerInderServerRpc(value);
+        get => networkTransmitter.currentPlayerIndex;
+        set => networkTransmitter.SetCurrentPlayerIndexServerRpc(value);
     }
 
     // DEBUG
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     public void StartGame() {
         if (networkTransmitter.GetPlayerId() == CurrentPlayerIndex) {
             uiManager.PullCard();
-            uiManager.SetTopButtonsActive(true);
+            uiManager.SetNextTurnButtonActive(true);
         }
     }
 
@@ -73,15 +73,26 @@ public class GameManager : MonoBehaviour
         }
 
         spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, false);
-        CurrentPlayerIndex = ++CurrentPlayerIndex % 2;
-        spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, true);
+        int nextPlayerIndex = (CurrentPlayerIndex + 1) % 2;
+        spaceshipsManager.SetActionAvailableToSpaceships(nextPlayerIndex, true);
 
-        bool firstPlayerisNext = CurrentPlayerIndex == 0;
-        spaceshipsManager.SetSpaceshipsFriendliness(firstPlayerisNext);
+        spaceshipsManager.MoveSpaceshipsForward(nextPlayerIndex);
+
+        uiManager.SetCardsDraggable(false);
+        uiManager.SetNextTurnButtonActive(false);
+
+        CurrentPlayerIndex = nextPlayerIndex;
+        networkTransmitter.SyncTurnEndingServerRpc();
+    }
+
+    public void SyncTurnEnding() {
+        spaceshipsManager.SetActionAvailableToSpaceships((CurrentPlayerIndex + 1) % 2, false);
+        spaceshipsManager.SetActionAvailableToSpaceships(CurrentPlayerIndex, true);
 
         spaceshipsManager.MoveSpaceshipsForward(CurrentPlayerIndex);
 
-        uiManager.SwitchToCurrentPlayersCards(CurrentPlayerIndex);
+        uiManager.SetCardsDraggable(true);
+        uiManager.SetNextTurnButtonActive(true);
         uiManager.PullCard();
     }
 

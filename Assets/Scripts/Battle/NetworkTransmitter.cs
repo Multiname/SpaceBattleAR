@@ -16,7 +16,7 @@ public class NetworkTransmitter : NetworkBehaviour
     public NetworkVariable<int> currentPlayerIndex = new(0);
 
     private void Awake() {
-        currentPlayerIndex.Value = Random.Range(0, 2);
+        // currentPlayerIndex.Value = Random.Range(0, 2);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -26,8 +26,6 @@ public class NetworkTransmitter : NetworkBehaviour
         } else {
             clientIsReady.Value = true;
         }
-
-        text.SetText(NetworkManager.Singleton.LocalClientId + "\n" + currentPlayerIndex.Value);
 
         if (hostIsReady.Value && clientIsReady.Value) {
             SetReadyClientRpc();
@@ -46,5 +44,17 @@ public class NetworkTransmitter : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetCurrentPlayerInderServerRpc(int index) {
         currentPlayerIndex.Value = index;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncSpaceshipSpawningServerRpc(int spaceshipIndex, int column) {
+        SyncSpaceshipSpawningClientRpc(spaceshipIndex, column);
+    }
+
+    [ClientRpc]
+    private void SyncSpaceshipSpawningClientRpc(int spaceshipIndex, int column) {
+        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex.Value) {
+            gameManager.SyncSpaceshipSpawning(spaceshipIndex, column);
+        }
     }
 }

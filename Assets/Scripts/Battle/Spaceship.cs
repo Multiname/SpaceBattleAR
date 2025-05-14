@@ -41,7 +41,7 @@ public class Spaceship : MonoBehaviour
         }
     }
 
-    private void Start() {
+    private void Awake() {
         HealthPoints = Card.HealthPoints;
         meshRenderer.material.color = Color.green;
         teamColor = Color.green;

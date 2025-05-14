@@ -42,7 +42,20 @@ public class GameManager : MonoBehaviour
     }
 
     public bool TryToSpawnSpaceship(Spaceship spaceship) {
-        return spaceshipsManager.TryToSpawnSpaceship(CurrentPlayerIndex, spaceship, this);
+        var column = spaceshipsManager.TryToSpawnSpaceship(CurrentPlayerIndex, spaceship, this);
+        bool spawned = column != -1;
+
+        if (spawned) {
+            int spaceshipIndex = unlockedCards.GetCardStates().FindIndex(x => x.card.Spaceship == spaceship);
+            networkTransmitter.SyncSpaceshipSpawningServerRpc(spaceshipIndex, column);
+        }
+
+        return spawned;
+    }
+
+    public void SyncSpaceshipSpawning(int spaceshipIndex, int column) {
+        Spaceship spaceship = unlockedCards.GetCardStates()[spaceshipIndex].card.Spaceship;
+        spaceshipsManager.SpawnSpaceship(CurrentPlayerIndex, spaceship, this, column);
     }
 
     public void SetBattlefieldColumnsActive(bool active) {

@@ -18,15 +18,20 @@ public class SpaceshipsManager : MonoBehaviour
         battlefield.SetColumnsActive(playerIndex, active);
     }
 
-    public bool TryToSpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager) {
+    public int TryToSpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager) {
         var selectedColumn = battlefield.CheckColumnSelection();
         if (selectedColumn != -1) {
-            var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, playerIndex, selectedColumn);
+            var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, false, selectedColumn);
             spawnedSpaceship.Skill.GameManager = gameManager;
             spaceships[playerIndex].Add(spawnedSpaceship);
-            return true;
         }
-        return false;
+        return selectedColumn;
+    }
+
+    public void SpawnSpaceship(int playerIndex, Spaceship spaceship, GameManager gameManager, int column) {
+        var spawnedSpaceship = battlefield.SpawnSpaceship(spaceship, true, column, -1);
+        spawnedSpaceship.Skill.GameManager = gameManager;
+        spaceships[playerIndex].Add(spawnedSpaceship);
     }
 
     public void SetSpaceshipsFriendliness(bool firstPlayerisNext) {

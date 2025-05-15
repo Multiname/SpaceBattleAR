@@ -245,7 +245,8 @@ MonoBehaviour:
   damageText: {fileID: 5295072842410175078}
   <Spaceship>k__BackingField: {fileID: 2886818419271281545, guid: 6d6e55696f3a6bb40b894f689bdf0c6a, type: 3}
   cardsContainer: {fileID: 0}
-  <HealthPoints>k__BackingField: 2
+  draggable: 1
+  <HealthPoints>k__BackingField: 3
   <Damage>k__BackingField: 1
 --- !u!1 &4126559747011805792
 GameObject:

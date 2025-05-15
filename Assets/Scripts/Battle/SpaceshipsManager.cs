@@ -59,12 +59,23 @@ public class SpaceshipsManager : MonoBehaviour
         return battlefield.TryToMoveSpaceshipForward(playerIndex, spaceship);
     }
 
-    public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
+    public (int, int) AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
+        int attackerIndex = spaceships[playerIndex].IndexOf(attacker);
+        int targetIndex = spaceships[(playerIndex + 1) % 2].IndexOf(target);
+
         target.HealthPoints -= attacker.Card.Damage;
         attacker.ActionAvailable = false;
         if (target.HealthPoints <= 0) {
             EliminateSpaceship(target, playerIndex);
         }
+        
+        return (attackerIndex, targetIndex);
+    }
+
+    public void AttackSpaceship(int attackerIndex, int targetIndex, int playerIndex) {
+        Spaceship attacker = spaceships[playerIndex][attackerIndex];
+        Spaceship target = spaceships[(playerIndex + 1) % 2][targetIndex];
+        AttackSpaceship(attacker, target, playerIndex);
     }
 
     public void EliminateSpaceship(Spaceship target, int playerIndex) {

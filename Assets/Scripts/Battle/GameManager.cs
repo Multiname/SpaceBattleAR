@@ -97,7 +97,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void AttackSpaceship(Spaceship attacker, Spaceship target) {
-        spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
+        var (attackerIndex, targetIndex) = spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
+        networkTransmitter.SyncSpaceshipAttackingServerRpc(attackerIndex, targetIndex);
+    }
+
+    public void SyncSpaceshipAttacking(int attackerIndex, int targetIndex) {
+        spaceshipsManager.AttackSpaceship(attackerIndex, targetIndex, CurrentPlayerIndex);
     }
 
     public void EliminateSpaceship(Spaceship target) {

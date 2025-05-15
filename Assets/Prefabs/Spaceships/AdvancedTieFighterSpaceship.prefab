@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 285606122112201349}
-  <Card>k__BackingField: {fileID: 4012901404515908612, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
+  <Card>k__BackingField: {fileID: 4012901404515908612, guid: e79c75706b663e843af8c25252f1e6de, type: 3}
   healthPointsText: {fileID: 4066718230303181390}
   actionAvailableObject: {fileID: 5781979118770286952}
   <Skill>k__BackingField: {fileID: -7298251794235290811}

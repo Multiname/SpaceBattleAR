@@ -75,4 +75,16 @@ public class NetworkTransmitter : NetworkBehaviour
             gameManager.SyncTurnEnding();
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncSpaceshipAttackingServerRpc(int attackerIndex, int targetIndex) {
+        SyncSpaceshipAttackingClientRpc(attackerIndex, targetIndex);
+    }
+
+    [ClientRpc]
+    public void SyncSpaceshipAttackingClientRpc(int attackerIndex, int targetIndex) {
+        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+            gameManager.SyncSpaceshipAttacking(attackerIndex, targetIndex);
+        }
+    }
 }

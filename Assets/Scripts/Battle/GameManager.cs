@@ -97,7 +97,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void AttackSpaceship(Spaceship attacker, Spaceship target) {
-        var (attackerIndex, targetIndex) = spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
+        int attackerIndex = spaceshipsManager.GetSpaceshipIndex(attacker, CurrentPlayerIndex);
+        int targetIndex = spaceshipsManager.GetSpaceshipIndex(target, (CurrentPlayerIndex + 1) % 2);
+        spaceshipsManager.AttackSpaceship(attacker, target, CurrentPlayerIndex);
         networkTransmitter.SyncSpaceshipAttackingServerRpc(attackerIndex, targetIndex);
     }
 
@@ -105,12 +107,32 @@ public class GameManager : MonoBehaviour
         spaceshipsManager.AttackSpaceship(attackerIndex, targetIndex, CurrentPlayerIndex);
     }
 
-    public void EliminateSpaceship(Spaceship target) {
+    public void EliminateSpaceship(Spaceship caster, Spaceship target) {
+        int casterIndex = spaceshipsManager.GetSpaceshipIndex(caster, CurrentPlayerIndex);
+        int targetIndex = spaceshipsManager.GetSpaceshipIndex(target, (CurrentPlayerIndex + 1) % 2);
         spaceshipsManager.EliminateSpaceship(target, CurrentPlayerIndex);
+        networkTransmitter.SyncSpaceshipEliminatingServerRpc(casterIndex , targetIndex);
+    }
+
+    public void SyncSpaceshipEliminating(int casterIndex, int targetIndex) {
+        spaceshipsManager.EliminateSpaceship(targetIndex, CurrentPlayerIndex);
+        spaceshipsManager.SpendSpaceshipSkillAction(casterIndex, CurrentPlayerIndex);
     }
 
     public bool TryToMoveSpaceshipForward(Spaceship spaceship) {
-        return spaceshipsManager.TryToMoveSpaceshipForward(CurrentPlayerIndex, spaceship);
+        bool moved = spaceshipsManager.TryToMoveSpaceshipForward(CurrentPlayerIndex, spaceship);
+
+        if (moved) {
+            int spaceshipIndex = spaceshipsManager.GetSpaceshipIndex(spaceship, CurrentPlayerIndex);
+            networkTransmitter.SyncSpaceshipForwardMovingServerRpc(spaceshipIndex);
+        }
+
+        return moved;
+    }
+
+    public void SyncSpaceshipForwardMoving(int spaceshipIndex) {
+        spaceshipsManager.MoveSpaceshipForward(CurrentPlayerIndex, spaceshipIndex);
+        spaceshipsManager.SpendSpaceshipSkillAction(spaceshipIndex, CurrentPlayerIndex);
     }
 
     public void CancelBattle() {

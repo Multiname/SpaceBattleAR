@@ -59,17 +59,17 @@ public class SpaceshipsManager : MonoBehaviour
         return battlefield.TryToMoveSpaceshipForward(playerIndex, spaceship);
     }
 
-    public (int, int) AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
-        int attackerIndex = spaceships[playerIndex].IndexOf(attacker);
-        int targetIndex = spaceships[(playerIndex + 1) % 2].IndexOf(target);
+    public void MoveSpaceshipForward(int playerIndex, int spaceshipIndex) {
+        Spaceship spaceship = spaceships[playerIndex][spaceshipIndex];
+        TryToMoveSpaceshipForward(playerIndex, spaceship);
+    }
 
+    public void AttackSpaceship(Spaceship attacker, Spaceship target, int playerIndex) {
         target.HealthPoints -= attacker.Card.Damage;
         attacker.ActionAvailable = false;
         if (target.HealthPoints <= 0) {
             EliminateSpaceship(target, playerIndex);
         }
-        
-        return (attackerIndex, targetIndex);
     }
 
     public void AttackSpaceship(int attackerIndex, int targetIndex, int playerIndex) {
@@ -80,11 +80,25 @@ public class SpaceshipsManager : MonoBehaviour
 
     public void EliminateSpaceship(Spaceship target, int playerIndex) {
         target.cell.DetachSpaceship();
-        spaceships[++playerIndex % 2].Remove(target);
+        spaceships[(playerIndex + 1) % 2].Remove(target);
         Destroy(target.gameObject);
+    }
+
+    public void EliminateSpaceship(int spaceshipIndex, int playerIndex) {
+        Spaceship target = spaceships[(playerIndex + 1) % 2][spaceshipIndex];
+        EliminateSpaceship(target, playerIndex);
     }
 
     public bool IsFirstRowCaptured(int playerIndex) {
         return battlefield.IsFirstRowCaptured(playerIndex);
+    }
+
+    public void SpendSpaceshipSkillAction(int spaceshipIndex, int playerIndex) {
+        Spaceship spaceship = spaceships[playerIndex][spaceshipIndex];
+        spaceship.Skill.SpendAction();
+    }
+
+    public int GetSpaceshipIndex(Spaceship spaceship, int playerIndex) {
+        return spaceships[playerIndex].IndexOf(spaceship);
     }
 }

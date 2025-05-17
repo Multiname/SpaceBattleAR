@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class StepForward : Skill
 {
     public override void Prepare() {
@@ -12,8 +10,7 @@ public class StepForward : Skill
 
     private void UseSkill() {
         if (GameManager.TryToMoveSpaceshipForward(spaceship)) {
-            Available = false;
-            spaceship.ActionAvailable = false;
+            SpendAction();
         }
     }
 }

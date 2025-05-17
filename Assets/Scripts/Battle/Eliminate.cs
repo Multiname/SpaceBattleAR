@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Eliminate : Skill
 {
     public override bool Targeted { get => true; }
@@ -13,8 +11,7 @@ public class Eliminate : Skill
     }
 
     public void UseSkill(Spaceship target) {
-        GameManager.EliminateSpaceship(target);
-        Available = false;
-        spaceship.ActionAvailable = false;
+        GameManager.EliminateSpaceship(spaceship, target);
+        SpendAction();
     }
 }

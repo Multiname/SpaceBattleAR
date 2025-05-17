@@ -2,7 +2,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkTransmitter : NetworkBehaviour
+public class NetworkTransmitter : NetworkBehaviour 
 {
     [SerializeField]
     private GameManager gameManager;
@@ -82,9 +82,33 @@ public class NetworkTransmitter : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void SyncSpaceshipAttackingClientRpc(int attackerIndex, int targetIndex) {
+    private void SyncSpaceshipAttackingClientRpc(int attackerIndex, int targetIndex) {
         if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
             gameManager.SyncSpaceshipAttacking(attackerIndex, targetIndex);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncSpaceshipForwardMovingServerRpc(int spaceshipIndex) {
+        SyncSpaceshipForwardMovingClientRpc(spaceshipIndex);
+    }
+
+    [ClientRpc]
+    private void SyncSpaceshipForwardMovingClientRpc(int spaceshipIndex) {
+        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+            gameManager.SyncSpaceshipForwardMoving(spaceshipIndex);
+        }
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncSpaceshipEliminatingServerRpc(int casterIndex, int targetIndex) {
+        SyncSpaceshipEliminatingClientRpc(casterIndex, targetIndex);
+    }
+
+    [ClientRpc]
+    private void SyncSpaceshipEliminatingClientRpc(int casterIndex, int targetIndex) {
+        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+            gameManager.SyncSpaceshipEliminating(casterIndex, targetIndex);
         }
     }
 }

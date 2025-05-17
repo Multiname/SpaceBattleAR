@@ -15,4 +15,9 @@ public abstract class Skill : MonoBehaviour
 
     public abstract void Prepare();
     public abstract void Discharge();
+
+    public void SpendAction() {
+        Available = false;
+        spaceship.ActionAvailable = false;
+    }
 }

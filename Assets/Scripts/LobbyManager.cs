@@ -47,6 +47,8 @@ public class LobbyManager : MonoBehaviour
     }
 
     private void CancelHosting() {
+        relayManager.Shutdown();
+
         windowState = WindowState.SELECTION;
         codeText.SetText("");
         hostPanel.SetActive(false);

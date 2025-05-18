@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     private UnlockedCards unlockedCards;
 
     private void Start() {
-        coinsText.SetText(unlockedCards.PlayerCoins.ToString());
+        coinsText.SetText(unlockedCards.playerCoins.ToString());
     }
 
     public void StartGame() {

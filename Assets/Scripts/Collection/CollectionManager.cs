@@ -35,10 +35,10 @@ public class CollectionManager : MonoBehaviour
     private int cardPrice;
 
     private int Coins { 
-        get => unlockedCards.PlayerCoins;
+        get => unlockedCards.playerCoins;
         set {
             coinsText.SetText(value.ToString());
-            unlockedCards.PlayerCoins = value;
+            unlockedCards.playerCoins = value;
         }
     }
 

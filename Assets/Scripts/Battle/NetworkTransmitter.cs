@@ -1,23 +1,23 @@
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkTransmitter : NetworkBehaviour 
-{
+public class NetworkTransmitter : NetworkBehaviour {
     [SerializeField]
     private GameManager gameManager;
 
-    [SerializeField]
-    private TextMeshProUGUI text;
-
     private bool hostIsReady = false;
     private bool clientIsReady = false;
+
+    private int playerIndex = 0;
 
     [HideInInspector]
     public int currentPlayerIndex = 0;
 
     private void Awake() {
-        // currentPlayerIndex.Value = Random.Range(0, 2);
+        if (NetworkManager.Singleton.LocalClientId != 0) {
+            playerIndex = 1;
+        }
+        currentPlayerIndex = Random.Range(0, 2);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -39,7 +39,7 @@ public class NetworkTransmitter : NetworkBehaviour
     }
 
     public int GetPlayerId() {
-        return (int)NetworkManager.Singleton.LocalClientId;
+        return playerIndex;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -59,7 +59,7 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncSpaceshipSpawningClientRpc(int spaceshipIndex, int column) {
-        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+        if (playerIndex != currentPlayerIndex) {
             gameManager.SyncSpaceshipSpawning(spaceshipIndex, column);
         }
     }
@@ -71,7 +71,7 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncTurnEndingClientRpc() {
-        if ((int)NetworkManager.Singleton.LocalClientId == currentPlayerIndex) {
+        if (playerIndex == currentPlayerIndex) {
             gameManager.SyncTurnEnding();
         }
     }
@@ -83,7 +83,7 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncSpaceshipAttackingClientRpc(int attackerIndex, int targetIndex) {
-        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+        if (playerIndex != currentPlayerIndex) {
             gameManager.SyncSpaceshipAttacking(attackerIndex, targetIndex);
         }
     }
@@ -95,11 +95,11 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncSpaceshipForwardMovingClientRpc(int spaceshipIndex) {
-        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+        if (playerIndex != currentPlayerIndex) {
             gameManager.SyncSpaceshipForwardMoving(spaceshipIndex);
         }
     }
-    
+
     [ServerRpc(RequireOwnership = false)]
     public void SyncSpaceshipEliminatingServerRpc(int casterIndex, int targetIndex) {
         SyncSpaceshipEliminatingClientRpc(casterIndex, targetIndex);
@@ -107,8 +107,25 @@ public class NetworkTransmitter : NetworkBehaviour
 
     [ClientRpc]
     private void SyncSpaceshipEliminatingClientRpc(int casterIndex, int targetIndex) {
-        if ((int)NetworkManager.Singleton.LocalClientId != currentPlayerIndex) {
+        if (playerIndex != currentPlayerIndex) {
             gameManager.SyncSpaceshipEliminating(casterIndex, targetIndex);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void EndMatchServerRpc() {
+        DeclareWinnerClientRpc();
+    }
+
+    [ClientRpc]
+    private void DeclareWinnerClientRpc() {
+        if (playerIndex != currentPlayerIndex) {
+            gameManager.DeclareWinner();
+            LeaveBattle();
+        }
+    }
+
+    public void LeaveBattle() {
+        NetworkManager.Singleton.Shutdown();
     }
 }

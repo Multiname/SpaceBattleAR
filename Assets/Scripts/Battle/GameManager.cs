@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace System.Runtime.CompilerServices {
         internal static class IsExternalInit {}
@@ -64,11 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn() {
         if (spaceshipsManager.IsFirstRowCaptured(CurrentPlayerIndex)) {
-            Debug.Log($"Player #{(CurrentPlayerIndex + 1) % 2} won");
-
-            unlockedCards.PlayerCoins += winReward;
-
-            SceneManager.LoadScene("Menu");
+            networkTransmitter.EndMatchServerRpc();
             return;
         }
 
@@ -83,6 +78,10 @@ public class GameManager : MonoBehaviour
 
         CurrentPlayerIndex = nextPlayerIndex;
         networkTransmitter.SyncTurnEndingServerRpc();
+    }
+
+    public void DeclareWinner() {
+        unlockedCards.playerCoins += winReward;
     }
 
     public void SyncTurnEnding() {
@@ -136,6 +135,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void CancelBattle() {
-        SceneManager.LoadScene("Menu");
+        networkTransmitter.LeaveBattle();
     }
 }

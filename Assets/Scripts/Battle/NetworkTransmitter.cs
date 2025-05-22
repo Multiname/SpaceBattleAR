@@ -17,7 +17,6 @@ public class NetworkTransmitter : NetworkBehaviour {
         if (NetworkManager.Singleton.LocalClientId != 0) {
             playerIndex = 1;
         }
-        currentPlayerIndex = Random.Range(0, 2);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -29,12 +28,14 @@ public class NetworkTransmitter : NetworkBehaviour {
         }
 
         if (hostIsReady && clientIsReady) {
-            SetReadyClientRpc();
+            int startingPlayerIndex = Random.Range(0, 2);
+            SetReadyClientRpc(startingPlayerIndex);
         }
     }
 
     [ClientRpc]
-    private void SetReadyClientRpc() {
+    private void SetReadyClientRpc(int startingPlayerIndex) {
+        currentPlayerIndex = startingPlayerIndex;
         gameManager.StartGame();
     }
 

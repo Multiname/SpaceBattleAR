@@ -4,6 +4,9 @@ using UnityEngine;
 public abstract class Skill : MonoBehaviour
 {
     [SerializeField]
+    private GameObject skillAvailable;
+
+    [SerializeField]
     protected Spaceship spaceship;
     [HideInInspector]
     public GameManager GameManager { protected get; set; }
@@ -11,7 +14,14 @@ public abstract class Skill : MonoBehaviour
     [HideInInspector]
     public virtual bool Targeted { get => false; }
 
-    public bool Available { get; protected set; } = true;
+    private bool available = true;
+    public bool Available {
+        get => available;
+        protected set {
+            available = value;
+            skillAvailable.SetActive(value);
+        }
+    }
 
     public abstract void Prepare();
     public abstract void Discharge();

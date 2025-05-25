@@ -5,11 +5,11 @@ using UnityEngine;
 public class Spaceship : MonoBehaviour
 {
     [SerializeField]
-    private MeshRenderer meshRenderer;
+    private Outline outline;
     [field: SerializeField]
     public Card Card { get; private set; }
     [SerializeField]
-    private TextMeshPro healthPointsText;
+    private TextMeshProUGUI healthPointsText;
     [SerializeField]
     private GameObject actionAvailableObject;
     private bool actionAvailable = true;
@@ -43,26 +43,25 @@ public class Spaceship : MonoBehaviour
 
     private void Awake() {
         HealthPoints = Card.HealthPoints;
-        meshRenderer.material.color = Color.green;
         teamColor = Color.green;
     }
 
     public void SetFriendliness(bool friendly) {
         Friendly = friendly;
         if (friendly) {
-            meshRenderer.material.color = Color.green;
+            outline.OutlineColor = Color.green;
             teamColor = Color.green;
         } else {
-            meshRenderer.material.color = Color.red;
+            outline.OutlineColor = Color.red;
             teamColor = Color.red;
         }
     }
 
     public void Select() {
-        meshRenderer.material.color = Color.blue;
+        outline.OutlineColor = Color.blue;
     }
 
     public void Unselect() {
-        meshRenderer.material.color = teamColor;
+        outline.OutlineColor = teamColor;
     }
 }

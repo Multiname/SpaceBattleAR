@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviour
     private TextMeshProUGUI codeText;
     [SerializeField]
     private TMP_InputField codeInputField;
+    [SerializeField]
+    private GameObject errorText;
 
     [SerializeField]
     private RelayManager relayManager;
@@ -57,6 +59,7 @@ public class LobbyManager : MonoBehaviour
 
     private void ReturnToSelection() {
         windowState = WindowState.SELECTION;
+        errorText.SetActive(false);
         codeInputField.text = "";
         clientPanel.SetActive(false);
         startButtons.SetActive(true);
@@ -80,7 +83,10 @@ public class LobbyManager : MonoBehaviour
     public async void ConnectClient() {
         string joinCode = codeInputField.text;
         if (joinCode != "") {
-            await relayManager.JoinRelay(joinCode);
+            errorText.SetActive(false);
+            if (!await relayManager.JoinRelay(joinCode)) {
+                errorText.SetActive(true);
+            }
         }
     }
 }

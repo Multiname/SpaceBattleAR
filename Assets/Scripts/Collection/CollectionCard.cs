@@ -19,6 +19,8 @@ public class CollectionCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private int healthPoints = 2;
     [SerializeField]
     private int damage = 1;
+    [SerializeField]
+    private string description;
 
     private ScrollRect scrollSpace;
     private RectTransform rt;
@@ -65,7 +67,7 @@ public class CollectionCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!scrolling && unlocked) {
-            collectionManager.ShowCardInfo(image.sprite, healthPoints, damage);
+            collectionManager.ShowCardInfo(image.sprite, healthPoints, damage, description);
         }
     }
 

@@ -91,7 +91,7 @@ public class CardsContainer : MonoBehaviour
         }
     }
 
-    public void ShowCardInfo(Sprite sprite, int healthpoints, int damage) {
-        uiManager.ShowCardInfo(sprite, healthpoints, damage);
+    public void ShowCardInfo(Card card) {
+        uiManager.ShowCardInfo(card);
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardStates:
   - card: {fileID: 4012901404515908612, guid: 973ca1aeb8dd0df42943714b5ef847f8, type: 3}
-    unlocked: 0
+    unlocked: 1
   - card: {fileID: 4012901404515908612, guid: e79c75706b663e843af8c25252f1e6de, type: 3}
     unlocked: 1
   playerCoins: 0

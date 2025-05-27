@@ -12,6 +12,8 @@ public class CollectionManager : MonoBehaviour
     private TextMeshProUGUI healthPointsText;
     [SerializeField]
     private TextMeshProUGUI damageText;
+    [SerializeField]
+    private TextMeshProUGUI cardDescription;
 
     [SerializeField]
     private GameObject returnToMenuButton;
@@ -53,12 +55,14 @@ public class CollectionManager : MonoBehaviour
         }
     }
 
-    public void ShowCardInfo(Sprite sprite, int healthPoints, int damage) {
-        cardInfo.gameObject.SetActive(true);
+    public void ShowCardInfo(Sprite sprite, int healthPoints, int damage, string description) {
         cardInfo.sprite = sprite;
+        cardDescription.SetText(description);
         healthPointsText.SetText(healthPoints.ToString());
         damageText.SetText(damage.ToString());
 
+        cardInfo.gameObject.SetActive(true);
+        cardDescription.gameObject.SetActive(true);
         returnToMenuButton.SetActive(false);
         cardsScrollSpace.SetActive(false);
         bottomPanel.SetActive(false);
@@ -67,6 +71,7 @@ public class CollectionManager : MonoBehaviour
 
     public void HideCardInfo() {
         cardInfo.gameObject.SetActive(false);
+        cardDescription.gameObject.SetActive(false);
 
         returnToMenuButton.SetActive(true);
         cardsScrollSpace.SetActive(true);

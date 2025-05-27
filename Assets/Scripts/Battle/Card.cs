@@ -36,6 +36,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public int HealthPoints { get; private set; } = 2;
     [field: SerializeField]
     public int Damage { get; private set; } = 1;
+    [field: SerializeField]
+    public string Description { get; private set; }
 
     private void Awake() {
         rt = GetComponent<RectTransform>();
@@ -84,7 +86,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!scrolling && !dragging) {
-            cardsContainer.ShowCardInfo(Image.sprite, HealthPoints, Damage);
+            cardsContainer.ShowCardInfo(this);
         }
     }
 

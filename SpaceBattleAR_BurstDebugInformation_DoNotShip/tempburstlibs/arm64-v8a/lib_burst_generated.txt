@@ -29,6 +29,7 @@ Library: E:\Multiname\Files\UnityProjects\SpaceBattleAR\SpaceBattleAR\Temp\Burst
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.Netcode.Runtime;
 --assembly-defines=Unity.Networking.Transport;
+--assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.Services.Authentication;
 --assembly-defines=Unity.Services.Core.Configuration;
 --assembly-defines=Unity.Services.Core.Device;

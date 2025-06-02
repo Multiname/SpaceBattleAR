@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
 
     private void Start() {
         coinsText.SetText(unlockedCards.playerCoins.ToString());
+        Application.targetFrameRate = 200;
     }
 
     public void StartGame() {

@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     // DEBUG
     private void Start() {
-        networkTransmitter.SetReadyServerRpc(new());
+        // networkTransmitter.SetReadyServerRpc(new());
     }
 
     public void CreateBattlefield(GameObject origin) {
